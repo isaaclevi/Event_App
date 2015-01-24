@@ -3,18 +3,41 @@ package com.isaaclevi.event_app;
 import android.app.Activity;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
+import com.parse.Parse;
+import com.parse.ParseObject;
+
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
 
 public class MainScreen extends Activity {
+
+    Model modeldb;
+    LogInFragment loginFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+        modeldb=Model.getModel();
+        modeldb.InitDB(this);
+        loginFrag=new LogInFragment();
+        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_container,loginFrag);
+        transaction.show(loginFrag);
+        transaction.addToBackStack("login");
+        transaction.commit();
+
+        /*
+        //test
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
+        */
     }
 
 
