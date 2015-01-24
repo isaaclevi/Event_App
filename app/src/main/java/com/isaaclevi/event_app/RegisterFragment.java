@@ -11,19 +11,20 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LogInFragment extends Fragment
-{
-    public LogInFragment()
-    {
+public class RegisterFragment extends Fragment {
+
+
+    public RegisterFragment() {
         // Required empty public constructor
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
-    {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root=inflater.inflate(R.layout.fragment_log_in, container, false);
-        return root;
+        return inflater.inflate(R.layout.fragment_register, container, false);
     }
+
+
 }
