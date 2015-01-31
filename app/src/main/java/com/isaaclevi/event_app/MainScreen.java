@@ -16,7 +16,9 @@ import android.widget.FrameLayout;
 public class MainScreen extends Activity {
 
     Model modeldb;
+    AppFragManager appFragManager;
     LogInFragment loginFrag;
+    RegisterFragment regFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -25,13 +27,14 @@ public class MainScreen extends Activity {
         setContentView(R.layout.activity_main_screen);
         modeldb=Model.getModel();
         modeldb.InitDB(this);
-        loginFrag=new LogInFragment();
-        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+        loginFrag = new LogInFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container,loginFrag);
         transaction.show(loginFrag);
         transaction.addToBackStack("login");
         transaction.commit();
 
+        
         /*
         //test
         ParseObject testObject = new ParseObject("TestObject");
@@ -39,7 +42,6 @@ public class MainScreen extends Activity {
         testObject.saveInBackground();
         */
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)

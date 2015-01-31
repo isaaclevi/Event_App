@@ -42,20 +42,14 @@ public class LogInFragment extends Fragment
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        final View root=inflater.inflate(R.layout.fragment_log_in, container, false);
+        View root=inflater.inflate(R.layout.fragment_log_in, container, false);
         regBTN= (Button) root.findViewById(R.id.register_btn);
         regBTN.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                regFrag=new RegisterFragment();
 
-                root.setVisibility(View.INVISIBLE);
-                FragmentTransaction transaction=getFragmentManager().beginTransaction();
-                transaction.add(R.id.fragment_container,regFrag);
-                transaction.show(regFrag);
-                transaction.commit();
             }
         });
         return root;

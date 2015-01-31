@@ -6,6 +6,12 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.parse.ParseObject;
+
+import java.text.ParseException;
 
 
 /**
@@ -13,6 +19,12 @@ import android.view.ViewGroup;
  */
 public class RegisterFragment extends Fragment {
 
+    Button regBTN;
+
+    EditText PersonName;
+    EditText Nickname;
+    EditText PhoneNumber;
+    EditText Password;
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -20,10 +32,44 @@ public class RegisterFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false);
+        View root=inflater.inflate(R.layout.fragment_register, container, false);
+        regBTN= (Button) root.findViewById(R.id.register_btn);
+        PersonName= (EditText) root.findViewById(R.id.person_name);
+        Nickname= (EditText) root.findViewById(R.id.nickname);
+        PhoneNumber= (EditText) root.findViewById(R.id.phone_number);
+        Password= (EditText) root.findViewById(R.id.password);
+        regBTN.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                User user=new User(Nickname.getText().toString(),PersonName.getText().toString()
+                        ,PhoneNumber.getText().toString(),Password.getText().toString());
+
+                ParseObject PareUser=new ParseObject("UsersTable");
+                PareUser.put("Nickname",user.Nickname);
+                PareUser.put("PersonName",user.PersonName);
+                PareUser.put("PhoneNumber",user.PhoneNumber);
+                PareUser.put("Password",user.Password);
+                PareUser.saveInBackground();
+
+                try
+                {
+                    PareUser.save();
+                }
+
+                catch (com.parse.ParseException e)
+                {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        return root;
     }
 
 
