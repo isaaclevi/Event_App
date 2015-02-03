@@ -15,8 +15,7 @@ import android.widget.FrameLayout;
 
 public class MainScreen extends Activity {
 
-    Model modeldb;
-    AppFragManager appFragManager;
+    Model modelDB;
     LogInFragment loginFrag;
     RegisterFragment regFrag;
 
@@ -25,22 +24,38 @@ public class MainScreen extends Activity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-        modeldb=Model.getModel();
-        modeldb.InitDB(this);
+        modelDB=Model.getModel();
+        modelDB.InitDB(this);
         loginFrag = new LogInFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container,loginFrag);
         transaction.show(loginFrag);
         transaction.addToBackStack("login");
         transaction.commit();
+        AppManager();
+    }
 
-        
-        /*
-        //test
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
-        */
+    public void AppManager()
+    {
+        //open registration
+        loginFrag.SetLogInDataDelegate(new LogInFragment.LogInData()
+        {
+            @Override
+            public void regClick()
+            {
+                regFrag=new RegisterFragment();
+                if(regFrag!=null)
+                {
+                    FragmentTransaction transaction=getFragmentManager().beginTransaction();
+                    transaction.hide(loginFrag);
+                    transaction.add(R.id.fragment_container,regFrag);
+                    transaction.show(regFrag);
+                    transaction.commit();
+                }
+            }
+        });
+
+        //---------------------------------------------------------------------------
     }
 
     @Override

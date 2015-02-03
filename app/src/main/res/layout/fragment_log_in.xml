@@ -46,16 +46,16 @@
                 android:id="@+id/log_in_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:layout_margin="15dp"
-                android:text="Log In"/>
+                android:ems="8"
+                android:layout_margin="10dp"
+                android:text="Login"/>
 
             <Button
                 android:id="@+id/register_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:layout_margin="15dp"
+                android:ems="8"
+                android:layout_margin="10dp"
                 android:text="Register"/>
 
         </LinearLayout>

@@ -17,26 +17,25 @@ public class LogInFragment extends Fragment
 {
     RegisterFragment regFrag;
 
-    /*
+
     interface LogInData
     {
         void regClick();
     }
-    */
-    Button regBTN;
-    /*
-    private LogInData LogInDataDelegate;
 
-    public void SetLogInDataDelegate(LogInData logInDataDelegate)
-    {
-
-    }
-    */
     public LogInFragment()
     {
         // Required empty public constructor
     }
 
+    Button regBTN;
+
+    private LogInData LogInDataDelegate;
+
+    public void SetLogInDataDelegate(LogInData logInDataDelegate)
+    {
+        this.LogInDataDelegate=logInDataDelegate;
+    }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,Bundle savedInstanceState)
@@ -49,7 +48,7 @@ public class LogInFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-
+                LogInDataDelegate.regClick();
             }
         });
         return root;

@@ -36,7 +36,7 @@ public class RegisterFragment extends Fragment {
     {
         // Inflate the layout for this fragment
         View root=inflater.inflate(R.layout.fragment_register, container, false);
-        regBTN= (Button) root.findViewById(R.id.register_btn);
+        regBTN= (Button) root.findViewById(R.id.sub_register_btn);
         PersonName= (EditText) root.findViewById(R.id.person_name);
         Nickname= (EditText) root.findViewById(R.id.nickname);
         PhoneNumber= (EditText) root.findViewById(R.id.phone_number);
