@@ -49,23 +49,7 @@ public class RegisterFragment extends Fragment {
                 User user=new User(Nickname.getText().toString(),PersonName.getText().toString()
                         ,PhoneNumber.getText().toString(),Password.getText().toString());
 
-                ParseObject PareUser=new ParseObject("UsersTable");
-                PareUser.put("Nickname",user.Nickname);
-                PareUser.put("PersonName",user.PersonName);
-                PareUser.put("PhoneNumber",user.PhoneNumber);
-                PareUser.put("Password",user.Password);
-                PareUser.saveInBackground();
-
-                try
-                {
-                    PareUser.save();
-                }
-
-                catch (com.parse.ParseException e)
-                {
-                    e.printStackTrace();
-                }
-
+                Model.getModel().registerUser(user);
             }
         });
 
