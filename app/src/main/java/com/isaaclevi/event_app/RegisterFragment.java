@@ -9,52 +9,95 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.parse.ParseObject;
-
-import java.text.ParseException;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class RegisterFragment extends Fragment {
 
-    Button regBTN;
+    interface RegisterDelegate {
+        public void register();
+    }
 
+    Button registerButton;
     EditText PersonName;
     EditText Nickname;
     EditText PhoneNumber;
     EditText Password;
 
+    boolean valid = true;
+
+    RegisterDelegate delegate;
+
     public RegisterFragment() {
         // Required empty public constructor
     }
 
+    public void setDelegate(RegisterDelegate delegate) {
+        this.delegate = delegate;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
         View root=inflater.inflate(R.layout.fragment_register, container, false);
-        regBTN= (Button) root.findViewById(R.id.sub_register_btn);
-        PersonName= (EditText) root.findViewById(R.id.person_name);
-        Nickname= (EditText) root.findViewById(R.id.nickname);
-        PhoneNumber= (EditText) root.findViewById(R.id.phone_number);
-        Password= (EditText) root.findViewById(R.id.password);
-        regBTN.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                User user=new User(Nickname.getText().toString(),PersonName.getText().toString()
-                        ,PhoneNumber.getText().toString(),Password.getText().toString());
+        registerButton = (Button) root.findViewById(R.id.sub_register_btn);
+        Nickname = (EditText) root.findViewById(R.id.nickname);
+        PersonName = (EditText) root.findViewById(R.id.person_name);
+        PhoneNumber = (EditText) root.findViewById(R.id.phone_number);
+        Password = (EditText) root.findViewById(R.id.password);
+        final EditText Retype = (EditText) root.findViewById(R.id.retype_password);
 
-                Model.getModel().registerUser(user);
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!Model.getModel().checkNickname(Nickname.getText().toString())) {
+                    Nickname.setError("This Nickname is already chosen. Try Another!");
+                    valid = false;
+                }
+
+                if (!validatePhone(PhoneNumber.getText().toString())) {
+                    PhoneNumber.setError("The Phone Number is Invalid. Try Again!");
+                    valid = false;
+                }
+
+                if (!Model.getModel().checkPhone(PhoneNumber.getText().toString())) {
+                    PhoneNumber.setError("This Phone Number is already in use!");
+                    valid = false;
+                }
+
+                if (!Password.getText().toString().equals(Retype.getText().toString())) {
+                    Retype.setError("Passwords don't match!");
+                    valid = false;
+                }
+
+                if (valid)
+                {
+                    User user = new User(Nickname.getText().toString(),
+                            PersonName.getText().toString(),
+                            PhoneNumber.getText().toString(),
+                            Password.getText().toString());
+
+                    Model.getModel().registerUser(user);
+
+                    if (delegate != null)
+                        delegate.register();
+                }
             }
         });
 
         return root;
     }
 
-
+    public boolean validatePhone(String phone) {
+        return (phone.startsWith("050") ||
+                phone.startsWith("052") ||
+                phone.startsWith("053") ||
+                phone.startsWith("054") ||
+                phone.startsWith("055") ||
+                phone.startsWith("057") ||
+                phone.startsWith("058")) &&
+                phone.length() == 10;
+    }
 }
