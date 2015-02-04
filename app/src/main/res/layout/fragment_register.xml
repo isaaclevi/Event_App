@@ -23,6 +23,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:layout_margin="15dp"
+            android:inputType="textPersonName"
             android:hint="Person Name"/>
 
         <EditText
@@ -32,6 +33,8 @@
             android:ems="10"
             android:layout_margin="15dp"
             android:hint="Phone Number"
+            android:inputType="phone"
+            android:maxLength="10"
             android:layout_gravity="center_horizontal"/>
 
         <EditText

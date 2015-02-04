@@ -2,11 +2,14 @@ package com.isaaclevi.event_app;
 
 import android.app.Activity;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
+import java.util.List;
 
 /**
  * Created by isaac on 24/01/2015.
@@ -15,6 +18,7 @@ import com.parse.ParseQuery;
 public class Model
 {
     private final static Model instance = new Model();
+    private boolean valid = true;
 
     private Model()
     {}
@@ -22,6 +26,14 @@ public class Model
     public static Model getModel()
     {
         return instance;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 
     //-------------------------------------------------------
@@ -44,26 +56,26 @@ public class Model
     }
 
     public boolean checkNickname(final String nickname) {
-        final boolean[] valid = new boolean[1];
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("UsersTable");
         query.whereEqualTo("Nickname", nickname);
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            public void done(ParseObject object, ParseException e) {
-                valid[0] = (object == null) || !nickname.equals(object.getString("Nickname"));
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                Model.getModel().setValid(parseObjects.size() == 0);
             }
         });
-        return valid[0];
+        return isValid();
     }
 
     public boolean checkPhone(final String phone) {
-        final boolean[] valid = new boolean[1];
         ParseQuery<ParseObject> query = ParseQuery.getQuery("UsersTable");
         query.whereEqualTo("PhoneNumber", phone);
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            public void done(ParseObject object, ParseException e) {
-                valid[0] = (object == null) || !phone.equals(object.getString("PhoneNumber"));
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                Model.getModel().setValid(parseObjects.size() == 0);
             }
         });
-        return valid[0];
+        return isValid();
     }
 }

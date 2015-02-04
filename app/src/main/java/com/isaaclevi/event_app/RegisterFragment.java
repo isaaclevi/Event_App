@@ -24,6 +24,7 @@ public class RegisterFragment extends Fragment {
     EditText Nickname;
     EditText PhoneNumber;
     EditText Password;
+    EditText Retype;
 
     boolean valid = true;
 
@@ -47,31 +48,12 @@ public class RegisterFragment extends Fragment {
         PersonName = (EditText) root.findViewById(R.id.person_name);
         PhoneNumber = (EditText) root.findViewById(R.id.phone_number);
         Password = (EditText) root.findViewById(R.id.password);
-        final EditText Retype = (EditText) root.findViewById(R.id.retype_password);
+        Retype = (EditText) root.findViewById(R.id.retype_password);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Model.getModel().checkNickname(Nickname.getText().toString())) {
-                    Nickname.setError("This Nickname is already chosen. Try Another!");
-                    valid = false;
-                }
-
-                if (!validatePhone(PhoneNumber.getText().toString())) {
-                    PhoneNumber.setError("The Phone Number is Invalid. Try Again!");
-                    valid = false;
-                }
-
-                if (!Model.getModel().checkPhone(PhoneNumber.getText().toString())) {
-                    PhoneNumber.setError("This Phone Number is already in use!");
-                    valid = false;
-                }
-
-                if (!Password.getText().toString().equals(Retype.getText().toString())) {
-                    Retype.setError("Passwords don't match!");
-                    valid = false;
-                }
-
+                setValidity();
                 if (valid)
                 {
                     User user = new User(Nickname.getText().toString(),
@@ -99,5 +81,42 @@ public class RegisterFragment extends Fragment {
                 phone.startsWith("057") ||
                 phone.startsWith("058")) &&
                 phone.length() == 10;
+    }
+
+    public void setValidity()
+    {
+        setEmptyError(Nickname);
+        setEmptyError(PersonName);
+        setEmptyError(PhoneNumber);
+        setEmptyError(Password);
+        setEmptyError(Retype);
+
+        if (!Model.getModel().checkNickname(Nickname.getText().toString())) {
+            Nickname.setError("This Nickname is already chosen. Try Another!");
+            valid = false;
+        }
+
+        if (!validatePhone(PhoneNumber.getText().toString())) {
+            PhoneNumber.setError("The Phone Number is Invalid. Try Again!");
+            valid = false;
+        }
+
+        if (!Model.getModel().checkPhone(PhoneNumber.getText().toString())) {
+            PhoneNumber.setError("This Phone Number is already in use!");
+            valid = false;
+        }
+
+        if (!Password.getText().toString().equals(Retype.getText().toString())) {
+            Retype.setError("Passwords don't match!");
+            valid = false;
+        }
+    }
+
+    public void setEmptyError(EditText text)
+    {
+        if(text.getText().toString().isEmpty()) {
+            text.setError("This Field Cannot Be Empty!");
+            valid = false;
+        }
     }
 }
