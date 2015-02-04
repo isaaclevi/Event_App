@@ -1,7 +1,6 @@
 package com.isaaclevi.event_app;
 
 import android.app.Activity;
-import android.content.pm.ActivityInfo;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -9,6 +8,7 @@ import com.parse.ParseObject;
 /**
  * Created by isaac on 24/01/2015.
  */
+
 public class Model
 {
     private final static Model instance = new Model();
@@ -38,16 +38,5 @@ public class Model
         ParseUser.put("PhoneNumber", user.PhoneNumber);
         ParseUser.put("Password", user.Password);
         ParseUser.saveInBackground();
-
-        try
-        {
-            ParseUser.save();
-        }
-
-        catch (com.parse.ParseException e)
-        {
-            e.printStackTrace();
-        }
-
     }
 }
