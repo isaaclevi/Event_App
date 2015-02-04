@@ -40,9 +40,10 @@ public class MainScreen extends Activity {
         loginFrag.SetLogInDataDelegate(new LogInFragment.LogInData()
         {
             @Override
-            public void regClick() {
+            public void regClick()
+            {
                 regFrag = new RegisterFragment();
-                regFrag.setDelegate(new RegisterFragment.RegisterDelegate() {
+                regFrag.setRegisterDelegate(new RegisterFragment.RegisterDelegate() {
                     @Override
                     public void register() {
                         getFragmentManager().popBackStack();
@@ -53,6 +54,12 @@ public class MainScreen extends Activity {
                 transaction.add(R.id.fragment_container, regFrag);
                 transaction.addToBackStack(null);
                 transaction.commit();
+            }
+
+            @Override
+            public void loginClick()
+            {
+
             }
         });
 

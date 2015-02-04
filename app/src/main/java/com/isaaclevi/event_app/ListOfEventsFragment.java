@@ -25,6 +25,20 @@ import java.util.Vector;
  */
 public class ListOfEventsFragment extends Fragment
 {
+
+
+    interface ListOfEvent
+    {
+        void OpenFragment();
+    }
+
+    private ListOfEvent ListOfEventDelegate;
+
+    public void SetListOfEventsDelegate(ListOfEvent ListOfEventDelegate)
+    {
+        this.ListOfEventDelegate=ListOfEventDelegate;
+    }
+
     Vector<Event> Events;
     ConvertListAdaptor adaptor;
 
@@ -81,7 +95,7 @@ public class ListOfEventsFragment extends Fragment
             TimeStarts.setText(temp.StartTime.toString());
             TextView TimeEnds= (TextView) convertView.findViewById(R.id.time_ends);
             TimeEnds.setText(temp.EndTime.toString());
-            TextView EventTime= (TextView) convertView.findViewById(R.id.time_left);
+            TextView EventTime = (TextView) convertView.findViewById(R.id.time_left);
             Calendar thatDay = Calendar.getInstance();
             
             SimpleDateFormat format=new SimpleDateFormat("HH:mm:ss");
