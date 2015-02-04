@@ -3,7 +3,6 @@ package com.isaaclevi.event_app;
 import android.app.Activity;
 
 import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;

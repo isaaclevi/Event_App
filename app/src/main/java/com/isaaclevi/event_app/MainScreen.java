@@ -40,23 +40,19 @@ public class MainScreen extends Activity {
         loginFrag.SetLogInDataDelegate(new LogInFragment.LogInData()
         {
             @Override
-            public void regClick()
-            {
-                regFrag=new RegisterFragment();
-                if(regFrag != null)
-                {
-                    regFrag.setDelegate(new RegisterFragment.RegisterDelegate() {
-                        @Override
-                        public void register() {
-                            getFragmentManager().popBackStack();
-                        }
-                    });
-                    FragmentTransaction transaction=getFragmentManager().beginTransaction();
-                    transaction.remove(loginFrag);
-                    transaction.add(R.id.fragment_container, regFrag);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
-                }
+            public void regClick() {
+                regFrag = new RegisterFragment();
+                regFrag.setDelegate(new RegisterFragment.RegisterDelegate() {
+                    @Override
+                    public void register() {
+                        getFragmentManager().popBackStack();
+                    }
+                });
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.remove(loginFrag);
+                transaction.add(R.id.fragment_container, regFrag);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
