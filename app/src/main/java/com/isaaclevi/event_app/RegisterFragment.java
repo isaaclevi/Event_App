@@ -34,7 +34,7 @@ public class RegisterFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void setDelegate(RegisterDelegate delegate) {
+    public void setRegisterDelegate(RegisterDelegate delegate) {
         this.delegate = delegate;
     }
 

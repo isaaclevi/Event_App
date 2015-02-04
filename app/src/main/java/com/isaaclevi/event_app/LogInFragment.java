@@ -21,6 +21,7 @@ public class LogInFragment extends Fragment
     interface LogInData
     {
         void regClick();
+        void loginClick();
     }
 
     public LogInFragment()
@@ -29,6 +30,7 @@ public class LogInFragment extends Fragment
     }
 
     Button regBTN;
+    Button loginBTN;
 
     private LogInData LogInDataDelegate;
 
@@ -42,13 +44,24 @@ public class LogInFragment extends Fragment
     {
         // Inflate the layout for this fragment
         View root=inflater.inflate(R.layout.fragment_log_in, container, false);
-        regBTN= (Button) root.findViewById(R.id.register_btn);
+        regBTN = (Button) root.findViewById(R.id.register_btn);
+        loginBTN = (Button) root.findViewById(R.id.log_in_btn);
+        //listener for reg btn
         regBTN.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 LogInDataDelegate.regClick();
+            }
+        });
+        //listener for login btn
+        loginBTN.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                LogInDataDelegate.loginClick();
             }
         });
         return root;
