@@ -52,6 +52,9 @@ public class RegisterFragment extends Fragment {
                 Model.getModel().registerUser(user);
             }
         });
+
         return root;
     }
+
+
 }
