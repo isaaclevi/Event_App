@@ -28,8 +28,7 @@ public class MainScreen extends Activity {
         modelDB.InitDB(this);
         loginFrag = new LogInFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container,loginFrag);
-        transaction.show(loginFrag);
+        transaction.add(R.id.fragment_container, loginFrag);
         transaction.addToBackStack("login");
         transaction.commit();
         AppManager();
@@ -44,12 +43,18 @@ public class MainScreen extends Activity {
             public void regClick()
             {
                 regFrag=new RegisterFragment();
-                if(regFrag!=null)
+                if(regFrag != null)
                 {
+                    regFrag.setDelegate(new RegisterFragment.RegisterDelegate() {
+                        @Override
+                        public void register() {
+                            getFragmentManager().popBackStack();
+                        }
+                    });
                     FragmentTransaction transaction=getFragmentManager().beginTransaction();
-                    transaction.hide(loginFrag);
-                    transaction.add(R.id.fragment_container,regFrag);
-                    transaction.show(regFrag);
+                    transaction.remove(loginFrag);
+                    transaction.add(R.id.fragment_container, regFrag);
+                    transaction.addToBackStack(null);
                     transaction.commit();
                 }
             }
@@ -81,5 +86,12 @@ public class MainScreen extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(getFragmentManager().getBackStackEntryCount() == 1)
+            this.finish();
+        super.onBackPressed();
     }
 }
