@@ -19,17 +19,25 @@ import java.text.ParseException;
  */
 public class RegisterFragment extends Fragment {
 
-    Button regBTN;
+    interface RegisterDelegate {
+        public void register();
+    }
 
+    Button regBTN;
     EditText PersonName;
     EditText Nickname;
     EditText PhoneNumber;
     EditText Password;
 
+    RegisterDelegate delegate;
+
     public RegisterFragment() {
         // Required empty public constructor
     }
 
+    public void setDelegate(RegisterDelegate delegate) {
+        this.delegate = delegate;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
@@ -50,6 +58,8 @@ public class RegisterFragment extends Fragment {
                         ,PhoneNumber.getText().toString(),Password.getText().toString());
 
                 Model.getModel().registerUser(user);
+                if(delegate != null)
+                    delegate.register();
             }
         });
 
