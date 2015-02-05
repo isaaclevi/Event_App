@@ -12,7 +12,6 @@ public class MainScreen extends Activity {
 
     Model model;
     LogInFragment logInFragment;
-    RegisterFragment registerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,7 +36,7 @@ public class MainScreen extends Activity {
         logInFragment.SetLoginDelegate(new LogInFragment.LoginDelegate() {
             @Override
             public void regClick() {
-                registerFragment = new RegisterFragment();
+                RegisterFragment registerFragment = new RegisterFragment();
                 registerFragment.setRegisterDelegate(new RegisterFragment.RegisterDelegate() {
                     @Override
                     public void register() {
@@ -53,7 +52,12 @@ public class MainScreen extends Activity {
 
             @Override
             public void loginClick() {
-
+                EventDetailsFragment fragment = new EventDetailsFragment(); //Temporary!!!
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.remove(logInFragment);
+                transaction.add(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
     }
