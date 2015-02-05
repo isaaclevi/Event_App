@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 
 
 /**
@@ -15,10 +17,7 @@ import android.widget.CheckBox;
  */
 public class LogInFragment extends Fragment
 {
-    RegisterFragment regFrag;
-
-
-    interface LogInData
+    interface LoginDelegate
     {
         void regClick();
         void loginClick();
@@ -29,40 +28,60 @@ public class LogInFragment extends Fragment
         // Required empty public constructor
     }
 
+    EditText phoneNumber;
+    EditText password;
     Button register;
     Button login;
     CheckBox rememberMe;
 
+    private LoginDelegate loginDelegate;
 
-    private LogInData LogInDataDelegate;
-
-    public void SetLogInDataDelegate(LogInData logInDataDelegate)
+    public void SetLoginDelegate(LoginDelegate delegate)
     {
-        this.LogInDataDelegate=logInDataDelegate;
+        this.loginDelegate = delegate;
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        View root=inflater.inflate(R.layout.fragment_log_in, container, false);
+        View root = inflater.inflate(R.layout.fragment_log_in, container, false);
+
+        phoneNumber = (EditText) root.findViewById(R.id.phone_text);
+        password = (EditText) root.findViewById(R.id.password);
         register = (Button) root.findViewById(R.id.register_btn);
         login = (Button) root.findViewById(R.id.log_in_btn);
         rememberMe = (CheckBox) root.findViewById(R.id.remember_pass_box);
-        //listener for reg btn
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogInDataDelegate.regClick();
+                if(loginDelegate != null)
+                    loginDelegate.regClick();
             }
         });
-        //listener for login btn
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LogInDataDelegate.loginClick();
+                Model.getInstance().validateUser(phoneNumber.getText().toString(), password.getText().toString());
+                if(Model.getInstance().isValid())
+                    phoneNumber.setError("Wrong Phone Number or Password!");
+                else {
+                    if (loginDelegate != null)
+                        loginDelegate.loginClick();
+                }
             }
         });
+
+        //listener for remember box
+        rememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //do nothing at this point
+            }
+        });
+
         return root;
     }
 }

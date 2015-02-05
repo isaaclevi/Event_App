@@ -1,35 +1,32 @@
 package com.isaaclevi.event_app;
 
 import android.app.Activity;
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.*;
-import com.parse.Parse;
-import com.parse.ParseObject;
 
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 
 public class MainScreen extends Activity {
 
-    Model modelDB;
-    LogInFragment loginFrag;
-    RegisterFragment regFrag;
+    Model model;
+    LogInFragment logInFragment;
+    RegisterFragment registerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-        modelDB=Model.getModel();
-        modelDB.InitDB(this);
-        loginFrag = new LogInFragment();
+
+        model = Model.getInstance();
+        model.initializeModel(this);
+
+        logInFragment = new LogInFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container, loginFrag);
-        transaction.addToBackStack("login");
+        transaction.add(R.id.fragment_container, logInFragment);
+        transaction.addToBackStack(null);
         transaction.commit();
         AppManager();
     }
@@ -37,33 +34,28 @@ public class MainScreen extends Activity {
     public void AppManager()
     {
         //open registration
-        loginFrag.SetLogInDataDelegate(new LogInFragment.LogInData()
-        {
+        logInFragment.SetLoginDelegate(new LogInFragment.LoginDelegate() {
             @Override
-            public void regClick()
-            {
-                regFrag = new RegisterFragment();
-                regFrag.setRegisterDelegate(new RegisterFragment.RegisterDelegate() {
+            public void regClick() {
+                registerFragment = new RegisterFragment();
+                registerFragment.setRegisterDelegate(new RegisterFragment.RegisterDelegate() {
                     @Override
                     public void register() {
                         getFragmentManager().popBackStack();
                     }
                 });
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.remove(loginFrag);
-                transaction.add(R.id.fragment_container, regFrag);
+                transaction.remove(logInFragment);
+                transaction.add(R.id.fragment_container, registerFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
             }
 
             @Override
-            public void loginClick()
-            {
+            public void loginClick() {
 
             }
         });
-
-        //---------------------------------------------------------------------------
     }
 
     @Override
@@ -82,9 +74,8 @@ public class MainScreen extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-        {
+        if (id == R.id.action_settings) {
+            viewSettings();
             return true;
         }
 
@@ -96,5 +87,9 @@ public class MainScreen extends Activity {
         if(getFragmentManager().getBackStackEntryCount() == 1)
             this.finish();
         super.onBackPressed();
+    }
+
+    public void viewSettings() {
+        //Suppose we want to actually do this sometime
     }
 }

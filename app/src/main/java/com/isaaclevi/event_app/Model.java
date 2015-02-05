@@ -3,6 +3,7 @@ package com.isaaclevi.event_app;
 import android.content.Context;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -12,17 +13,19 @@ import java.util.List;
 
 /**
  * Created by isaac on 24/01/2015.
+ * Singleton Model Class
  */
 
 public class Model
 {
     private final static Model instance = new Model();
     private boolean valid = true;
+    private ErrorCode errorCode;
 
     private Model()
     {}
 
-    public static Model getModel()
+    public static Model getInstance()
     {
         return instance;
     }
@@ -35,9 +38,19 @@ public class Model
         this.valid = valid;
     }
 
+    public enum ErrorCode {OK, NO_USER, NO_MATCH}
+
+    public ErrorCode getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(ErrorCode errorCode) {
+        this.errorCode = errorCode;
+    }
+
     //-------------------------------------------------------
 
-    public void InitDB(Context context)
+    public void initializeModel(Context context)
     {
         Parse.initialize(context, "7d5fqJJFVBz6JCVELpK1hFY6BnDA9qBlgDoN6KrB", "kfXP7DUmsTjWp1ITgvKCQk6yabAz8E36HX2lVTer");
     }
@@ -57,7 +70,7 @@ public class Model
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
-                Model.getModel().setValid(parseObjects.size() == 0);
+                Model.getInstance().setValid(parseObjects.size() == 0);
             }
         });
         return isValid();
@@ -69,9 +82,28 @@ public class Model
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
-                Model.getModel().setValid(parseObjects.size() == 0);
+                Model.getInstance().setValid(parseObjects.size() == 0);
             }
         });
         return isValid();
+    }
+
+    public void validateUser(String phoneNumber, final String password) {
+        final ParseQuery<ParseObject> query = ParseQuery.getQuery("UsersTable");
+        query.whereEqualTo("PhoneNumber", phoneNumber);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if (parseObjects.size() == 0)
+                    Model.getInstance().setValid(false);
+                else {
+                    ParseObject parseObject = parseObjects.get(0);
+                    if(password.equals(parseObject.getString("Password")))
+                        Model.getInstance().setValid(false);
+                    else
+                        Model.getInstance().setValid(true);
+                }
+            }
+        });
     }
 }

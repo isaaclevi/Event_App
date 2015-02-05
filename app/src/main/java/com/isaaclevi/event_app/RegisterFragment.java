@@ -28,21 +28,22 @@ public class RegisterFragment extends Fragment {
 
     boolean valid = true;
 
-    RegisterDelegate delegate;
+    RegisterDelegate registerDelegate;
 
     public RegisterFragment() {
         // Required empty public constructor
     }
 
     public void setRegisterDelegate(RegisterDelegate delegate) {
-        this.delegate = delegate;
+        this.registerDelegate = delegate;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        View root=inflater.inflate(R.layout.fragment_register, container, false);
+        View root = inflater.inflate(R.layout.fragment_register, container, false);
+
         registerButton = (Button) root.findViewById(R.id.sub_register_btn);
         Nickname = (EditText) root.findViewById(R.id.nickname);
         PersonName = (EditText) root.findViewById(R.id.person_name);
@@ -61,10 +62,10 @@ public class RegisterFragment extends Fragment {
                             PhoneNumber.getText().toString(),
                             Password.getText().toString());
 
-                    Model.getModel().registerUser(user);
+                    Model.getInstance().registerUser(user);
 
-                    if (delegate != null)
-                        delegate.register();
+                    if (registerDelegate != null)
+                        registerDelegate.register();
                 }
             }
         });
@@ -85,13 +86,15 @@ public class RegisterFragment extends Fragment {
 
     public void setValidity()
     {
+        valid = true;
+
         setEmptyError(Nickname);
         setEmptyError(PersonName);
         setEmptyError(PhoneNumber);
         setEmptyError(Password);
         setEmptyError(Retype);
 
-        if (!Model.getModel().checkNickname(Nickname.getText().toString())) {
+        if (!Model.getInstance().checkNickname(Nickname.getText().toString())) {
             Nickname.setError("This Nickname is already chosen. Try Another!");
             valid = false;
         }
@@ -101,7 +104,7 @@ public class RegisterFragment extends Fragment {
             valid = false;
         }
 
-        if (!Model.getModel().checkPhone(PhoneNumber.getText().toString())) {
+        if (!Model.getInstance().checkPhone(PhoneNumber.getText().toString())) {
             PhoneNumber.setError("This Phone Number is already in use!");
             valid = false;
         }
