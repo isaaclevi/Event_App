@@ -1,13 +1,13 @@
 package com.isaaclevi.event_app;
 
 
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 
 
 /**
@@ -29,8 +29,10 @@ public class LogInFragment extends Fragment
         // Required empty public constructor
     }
 
-    Button regBTN;
-    Button loginBTN;
+    Button register;
+    Button login;
+    CheckBox rememberMe;
+
 
     private LogInData LogInDataDelegate;
 
@@ -44,23 +46,20 @@ public class LogInFragment extends Fragment
     {
         // Inflate the layout for this fragment
         View root=inflater.inflate(R.layout.fragment_log_in, container, false);
-        regBTN = (Button) root.findViewById(R.id.register_btn);
-        loginBTN = (Button) root.findViewById(R.id.log_in_btn);
+        register = (Button) root.findViewById(R.id.register_btn);
+        login = (Button) root.findViewById(R.id.log_in_btn);
+        rememberMe = (CheckBox) root.findViewById(R.id.remember_pass_box);
         //listener for reg btn
-        regBTN.setOnClickListener(new View.OnClickListener()
-        {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 LogInDataDelegate.regClick();
             }
         });
         //listener for login btn
-        loginBTN.setOnClickListener(new View.OnClickListener()
-        {
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 LogInDataDelegate.loginClick();
             }
         });

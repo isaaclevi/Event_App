@@ -3,16 +3,12 @@ package com.isaaclevi.event_app;
 
 import android.os.Bundle;
 import android.app.Fragment;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -52,7 +48,7 @@ public class ListOfEventsFragment extends Fragment
     {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_list_of_events, container, false);
-        ListView List= (ListView) root.findViewById(R.id.ListEvents);
+        ListView List= (ListView) root.findViewById(R.id.events_list);
         adaptor=new ConvertListAdaptor();
         List.setAdapter(adaptor);
         return root;

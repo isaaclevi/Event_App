@@ -1,6 +1,6 @@
 package com.isaaclevi.event_app;
 
-import android.app.Activity;
+import android.content.Context;
 
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -37,12 +37,9 @@ public class Model
 
     //-------------------------------------------------------
 
-    public void InitDB(Activity activity)
+    public void InitDB(Context context)
     {
-        // Enable Local Datastore.
-        Parse.enableLocalDatastore(activity);
-
-        Parse.initialize(activity, "7d5fqJJFVBz6JCVELpK1hFY6BnDA9qBlgDoN6KrB", "kfXP7DUmsTjWp1ITgvKCQk6yabAz8E36HX2lVTer");
+        Parse.initialize(context, "7d5fqJJFVBz6JCVELpK1hFY6BnDA9qBlgDoN6KrB", "kfXP7DUmsTjWp1ITgvKCQk6yabAz8E36HX2lVTer");
     }
 
     public void registerUser(User user) {

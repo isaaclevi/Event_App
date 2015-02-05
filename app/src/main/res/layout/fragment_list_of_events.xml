@@ -4,7 +4,7 @@
     tools:context="com.isaaclevi.event_app.ListOfEventsFragment">
 
     <ListView
-        android:id="@+id/ListEvents"
+        android:id="@+id/events_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
