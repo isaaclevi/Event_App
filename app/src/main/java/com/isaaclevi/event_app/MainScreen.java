@@ -3,9 +3,11 @@ package com.isaaclevi.event_app;
 import android.app.Activity;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class MainScreen extends Activity {
@@ -41,6 +43,11 @@ public class MainScreen extends Activity {
                     @Override
                     public void register() {
                         getFragmentManager().popBackStack();
+                        Context context = getApplicationContext();
+                        CharSequence text = "Register Complete.";
+                        int duration = Toast.LENGTH_SHORT;
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
                     }
                 });
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
