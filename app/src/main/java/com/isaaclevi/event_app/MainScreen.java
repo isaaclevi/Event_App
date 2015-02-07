@@ -16,8 +16,7 @@ public class MainScreen extends Activity {
     LogInFragment logInFragment;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
@@ -32,13 +31,17 @@ public class MainScreen extends Activity {
         AppManager();
     }
 
-    public void AppManager()
-    {
-        //open registration
+    public void AppManager() {
         logInFragment.SetLoginDelegate(new LogInFragment.LoginDelegate() {
             @Override
             public void regClick() {
                 RegisterFragment registerFragment = new RegisterFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.remove(logInFragment);
+                transaction.add(R.id.fragment_container, registerFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
                 registerFragment.setRegisterDelegate(new RegisterFragment.RegisterDelegate() {
                     @Override
                     public void register() {
@@ -50,37 +53,37 @@ public class MainScreen extends Activity {
                         toast.show();
                     }
                 });
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.remove(logInFragment);
-                transaction.add(R.id.fragment_container, registerFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
             }
 
             @Override
-            public void loginClick()
-            {
-                EventDetailsFragment fragment = new EventDetailsFragment(); //Temporary!!!
+            public void loginClick() {
+                ListOfEventsFragment eventsFragment = new ListOfEventsFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.remove(logInFragment);
-                transaction.add(R.id.fragment_container, fragment);
+                transaction.add(R.id.fragment_container, eventsFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
+
+                eventsFragment.SetListOfEventsDelegate(new ListOfEventsFragment.ListOfEventsDelegate() {
+                    @Override
+                    public void viewEvent(Event event) {
+                        EventDetailsFragment detailsFragment = new EventDetailsFragment();
+
+                    }
+                });
             }
         });
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_screen, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -101,8 +104,7 @@ public class MainScreen extends Activity {
         super.onBackPressed();
     }
 
-    public void viewSettings()
-    {
+    public void viewSettings() {
         //Suppose we want to actually do this sometime
     }
 }

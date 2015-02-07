@@ -1,9 +1,5 @@
 package com.isaaclevi.event_app;
 
-import android.text.format.Time;
-
-import java.util.Calendar;
-
 /**
  * Created by isaac on 30/12/2014.
  */
@@ -14,11 +10,11 @@ public class Event
     String EventName;
     String UserName;
     String EventExplanation;
-    Calendar Register;
-    Calendar StartTime;
-    Calendar EndTime;
+    String Register;
+    String StartTime;
+    String EndTime;
 
-    public Event(String eventId, String eventName, String userName,String eventExplanation,Calendar register, Calendar startTime, Calendar endTime)
+    public Event(String eventId, String eventName, String userName,String eventExplanation,String register, String startTime, String endTime)
     {
         EventId = eventId;
         EventName = eventName;

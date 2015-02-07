@@ -21,23 +21,19 @@ import java.util.Vector;
  */
 public class ListOfEventsFragment extends Fragment
 {
-    interface ListOfEvent
-    {
-        void OpenFragment();
+    interface ListOfEventsDelegate {
+        void viewEvent(Event event);
     }
 
-    private ListOfEvent ListOfEventDelegate;
+    private ListOfEventsDelegate listOfEventsDelegate;
 
-    public void SetListOfEventsDelegate(ListOfEvent ListOfEventDelegate)
-    {
-        this.ListOfEventDelegate=ListOfEventDelegate;
+    public void SetListOfEventsDelegate(ListOfEventsDelegate delegate) {
+        this.listOfEventsDelegate = delegate;
     }
 
-    Vector<Event> Events;
-    ConvertListAdaptor adaptor;
+    Adapter adapter;
 
-    public ListOfEventsFragment()
-    {
+    public ListOfEventsFragment() {
         // Required empty public constructor
     }
 
@@ -46,23 +42,29 @@ public class ListOfEventsFragment extends Fragment
     {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_list_of_events, container, false);
-        ListView List= (ListView) root.findViewById(R.id.events_list);
-        adaptor=new ConvertListAdaptor();
-        List.setAdapter(adaptor);
+        ListView List = (ListView) root.findViewById(R.id.events_list);
+        adapter = new Adapter();
+        List.setAdapter(adapter);
         return root;
     }
 
-    class ConvertListAdaptor extends BaseAdapter
+    class Adapter extends BaseAdapter
     {
+        Vector<Event> events;
+
+        Adapter() {
+            updateList();
+        }
+
         @Override
         public int getCount()
         {
-            return Events.size();
+            return events.size();
         }
 
         @Override
         public Object getItem(int position) {
-            return Events.elementAt(position);
+            return events.elementAt(position);
         }
 
         @Override
@@ -73,12 +75,13 @@ public class ListOfEventsFragment extends Fragment
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
+            /*
             if(convertView == null)
             {
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 convertView = inflater.inflate(R.layout.row_event_layout,null);
             }
-            Event temp=Events.elementAt(position);
+            Event temp= events.elementAt(position);
             TextView EventName=(TextView)convertView.findViewById(R.id.event_name);
             EventName.setText(temp.EventName);
             TextView UserName = (TextView) convertView.findViewById(R.id.user_name);
@@ -101,7 +104,12 @@ public class ListOfEventsFragment extends Fragment
             catch (Exception e)
             {}
             //EventTime.setText();
+            */
             return null;
+        }
+
+        public void updateList() {
+            events = Model.getInstance().getAllEvents();
         }
     }
 }

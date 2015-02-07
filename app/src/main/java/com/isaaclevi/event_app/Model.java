@@ -8,6 +8,7 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by isaac on 24/01/2015.
@@ -39,6 +40,27 @@ public class Model
 
     public void initializeModel(Context context) {
         Parse.initialize(context, "7d5fqJJFVBz6JCVELpK1hFY6BnDA9qBlgDoN6KrB", "kfXP7DUmsTjWp1ITgvKCQk6yabAz8E36HX2lVTer");
+    }
+
+    public Vector<Event> getAllEvents() {
+        Vector<Event> events = new Vector<>();
+        ParseQuery query = new ParseQuery("Events");
+        try {
+            List<ParseObject> result = query.find();
+            for(ParseObject object: result){
+                Event event = new Event(object.getString("EventId"),
+                        object.getString("EventName"),
+                        object.getString("UserName"),
+                        object.getString("EventExplanation"),
+                        object.getString("Register"),
+                        object.getString("StartTime"),
+                        object.getString("EndTime"));
+                events.add(event);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return events;
     }
 
     public void registerUser(User user) {

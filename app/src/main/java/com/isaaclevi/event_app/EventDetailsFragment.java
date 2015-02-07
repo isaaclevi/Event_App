@@ -13,11 +13,25 @@ import android.view.ViewGroup;
  */
 public class EventDetailsFragment extends Fragment {
 
+    interface EventDetailsFragmentDelegate {
+
+    }
+
+    Event event;
+
+    EventDetailsFragmentDelegate eventDetailsDelegate;
 
     public EventDetailsFragment() {
         // Required empty public constructor
     }
 
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+
+    public void setEventDetailsDelegate(EventDetailsFragmentDelegate delegate) {
+        this.eventDetailsDelegate = delegate;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,6 +39,4 @@ public class EventDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_event_details, container, false);
     }
-
-
 }
