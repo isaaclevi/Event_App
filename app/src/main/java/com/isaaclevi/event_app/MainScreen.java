@@ -58,7 +58,8 @@ public class MainScreen extends Activity {
             }
 
             @Override
-            public void loginClick() {
+            public void loginClick()
+            {
                 EventDetailsFragment fragment = new EventDetailsFragment(); //Temporary!!!
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.remove(logInFragment);
@@ -100,7 +101,8 @@ public class MainScreen extends Activity {
         super.onBackPressed();
     }
 
-    public void viewSettings() {
+    public void viewSettings()
+    {
         //Suppose we want to actually do this sometime
     }
 }

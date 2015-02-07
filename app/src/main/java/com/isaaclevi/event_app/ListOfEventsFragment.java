@@ -21,8 +21,6 @@ import java.util.Vector;
  */
 public class ListOfEventsFragment extends Fragment
 {
-
-
     interface ListOfEvent
     {
         void OpenFragment();
@@ -83,8 +81,8 @@ public class ListOfEventsFragment extends Fragment
             Event temp=Events.elementAt(position);
             TextView EventName=(TextView)convertView.findViewById(R.id.event_name);
             EventName.setText(temp.EventName);
-            TextView UserNmae= (TextView) convertView.findViewById(R.id.user_name);
-            UserNmae.setText(temp.UserName);
+            TextView UserName = (TextView) convertView.findViewById(R.id.user_name);
+            UserName.setText(temp.UserName);
             TextView EventExplanation= (TextView) convertView.findViewById(R.id.event_explanation);
             EventExplanation.setText(temp.EventExplanation);
             TextView TimeStarts= (TextView) convertView.findViewById(R.id.time_started);

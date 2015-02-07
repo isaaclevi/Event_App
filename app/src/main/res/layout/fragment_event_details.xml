@@ -31,6 +31,15 @@
                 android:layout_margin="15dp"
                 android:hint="User"
                 android:layout_weight="1"/>
+            
+            <TextView
+                android:id="@+id/time_left"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:text="Time Left:"
+                android:layout_margin="15dp"/>
 
             <TextView
                 android:id="@+id/event_explanation"

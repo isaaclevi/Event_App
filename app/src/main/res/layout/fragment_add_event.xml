@@ -35,13 +35,13 @@
             android:layout_height="wrap_content"
             android:hint="Event Address"/>
 
-        <EditText
+        <CalendarView
             android:id="@+id/add_event_start_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="dd:mm:yy hh:mm:ss"/>
 
-        <EditText
+        <CalendarView
             android:id="@+id/add_event_end_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
