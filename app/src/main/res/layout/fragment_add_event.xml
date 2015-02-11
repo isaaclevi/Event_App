@@ -6,52 +6,115 @@
     tools:context="com.isaaclevi.event_app.AddEventFragment">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center_horizontal|center_vertical">
 
         <EditText
             android:id="@+id/add_event_name"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:hint="Event Name"/>
 
         <TextView
             android:id="@+id/add_user_name"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:hint="User Name"/>
 
         <EditText
             android:id="@+id/add_event_explanation"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:hint="Event Explanation"/>
 
         <EditText
             android:id="@+id/add_event_address"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:hint="Event Address"/>
 
-        <CalendarView
-            android:id="@+id/add_event_start_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="dd:mm:yy hh:mm:ss"/>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
-        <CalendarView
-            android:id="@+id/add_event_end_time"
+            <TextView
+                android:id="@+id/add_event_start_date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:hint="Start Date"
+                android:ems="10"
+                android:layout_margin="15dp"/>
+
+            <TextView
+                android:id="@+id/add_event_start_hours_seconds_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:hint="Start Time"
+                android:ems="10"
+                android:layout_margin="15dp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/change_start_time_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Change Event Start Time"
+            android:ems="10"
+            android:layout_margin="15dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/add_event_end_date_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:hint="End Date"
+                android:ems="10"
+                android:layout_margin="15dp"/>
+
+            <TextView
+                android:id="@+id/add_event_end_hours_seconds_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:hint="End Time"
+                android:ems="10"
+                android:layout_margin="15dp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/change_end_time_btn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Change Event End Time"
+            android:ems="10"
+            android:layout_margin="15dp"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="dd:mm:yy hh:mm:ss"/>
+            android:hint=""/>
 
         <Button
             android:id="@+id/add_event_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Add Event To List"/>
+            android:text="Add Event To List"
+            android:ems="10"
+            android:layout_margin="15dp"/>
 
     </LinearLayout>
 
