@@ -46,7 +46,7 @@ public class AddEventFragment extends Fragment {
 
     public void showTimePickerDialog()
     {
-        DialogFragment newFragment = new DatePickerFragment();
+        DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getFragmentManager(), "timePicker");
     }
 
@@ -68,7 +68,7 @@ public class AddEventFragment extends Fragment {
     {
         // Inflate the layout for this fragment
         View root=inflater.inflate(R.layout.fragment_add_event, container, false);
-        UserName = (TextView)root.findViewById(R.id.user_name);
+        UserName = (TextView)root.findViewById(R.id.add_user_name);
         UserName.setText(PersonName+"("+NickName+")");
         EventName = (EditText) root.findViewById(R.id.add_event_name);
         EventExplanation = (EditText) root.findViewById(R.id.add_event_explanation);
