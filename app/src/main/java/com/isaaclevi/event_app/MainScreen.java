@@ -14,7 +14,6 @@ public class MainScreen extends Activity {
 
     Model model;
     LogInFragment logInFragment;
-    AddEventFragment addEventFragment;
     MenuItem AddEventButton;
 
     @Override
@@ -99,7 +98,7 @@ public class MainScreen extends Activity {
         {
             case R.id.add_event_to_list:
                 AddEventButton.setVisible(false);
-
+                OpenAddEvent();
                 break;
             case R.id.action_settings:
                 break;
@@ -109,6 +108,15 @@ public class MainScreen extends Activity {
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void OpenAddEvent()
+    {
+        AddEventFragment addEventFrag=new AddEventFragment();
+        FragmentTransaction transaction=getFragmentManager().beginTransaction();
+        transaction.remove(getFragmentManager().findFragmentByTag("ListOfEventsFragments"));
+        transaction.add(R.id.fragment_container,addEventFrag);
+        transaction.commit();
     }
 
     @Override
