@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -14,6 +15,8 @@ public class MainScreen extends Activity {
 
     Model model;
     LogInFragment logInFragment;
+    AddEventFragment AddEventFrag;
+    MenuItem AddEventBTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,7 @@ public class MainScreen extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_screen, menu);
+        AddEventBTN = menu.findItem(R.id.add_event_to_list);
         return true;
     }
 
@@ -89,10 +93,18 @@ public class MainScreen extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            viewSettings();
-            return true;
+        switch (id)
+        {
+            case R.id.add_event_to_list:
+                AddEventBTN.setVisible(false);
+
+                break;
+            case R.id.action_settings:
+                break;
+            default:
+                break;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
