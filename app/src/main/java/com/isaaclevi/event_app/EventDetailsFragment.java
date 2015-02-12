@@ -13,13 +13,13 @@ import android.view.ViewGroup;
  */
 public class EventDetailsFragment extends Fragment {
 
-    interface EventDetailsFragmentDelegate {
+    interface EventDetailsDelegate {
 
     }
 
     Event event;
 
-    EventDetailsFragmentDelegate eventDetailsDelegate;
+    EventDetailsDelegate eventDetailsDelegate;
 
     public EventDetailsFragment() {
         // Required empty public constructor
@@ -29,7 +29,7 @@ public class EventDetailsFragment extends Fragment {
         this.event = event;
     }
 
-    public void setEventDetailsDelegate(EventDetailsFragmentDelegate delegate) {
+    public void setEventDetailsDelegate(EventDetailsDelegate delegate) {
         this.eventDetailsDelegate = delegate;
     }
 

@@ -2,6 +2,7 @@ package com.isaaclevi.event_app;
 
 import android.app.Activity;
 
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
@@ -29,10 +30,39 @@ public class MainScreen extends Activity {
         transaction.add(R.id.fragment_container, logInFragment);
         transaction.addToBackStack(null);
         transaction.commit();
-        AppManager();
+        OpenLogin();
     }
 
-    public void AppManager() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main_screen, menu);
+        AddEventButton = menu.findItem(R.id.add_event_to_list);
+        AddEventButton.setVisible(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch (id)
+        {
+            case R.id.add_event_to_list:
+                OpenAddEvent();
+                break;
+            case R.id.action_settings:
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void OpenLogin() {
         logInFragment.SetLoginDelegate(new LogInFragment.LoginDelegate() {
             @Override
             public void regClick() {
@@ -68,6 +98,7 @@ public class MainScreen extends Activity {
                         transaction.add(R.id.fragment_container, detailsFragment);
                         transaction.addToBackStack(null);
                         transaction.commit();
+                        AddEventButton.setVisible(false);
                     }
                 });
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -75,54 +106,38 @@ public class MainScreen extends Activity {
                 transaction.add(R.id.fragment_container, eventsFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
+                AddEventButton.setVisible(true);
             }
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main_screen, menu);
-        AddEventButton = menu.findItem(R.id.add_event_to_list);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        switch (id)
-        {
-            case R.id.add_event_to_list:
-                AddEventButton.setVisible(false);
-                OpenAddEvent();
-                break;
-            case R.id.action_settings:
-                break;
-            default:
-                break;
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void OpenAddEvent()
-    {
+    private void OpenAddEvent() {
         AddEventFragment addEventFrag=new AddEventFragment();
+        addEventFrag.setDelegate(new AddEventFragment.AddEventDelegate() {
+            @Override
+            public void add() {
+                getFragmentManager().popBackStack();
+                AddEventButton.setVisible(true);
+            }
+        });
         FragmentTransaction transaction=getFragmentManager().beginTransaction();
-        transaction.remove(getFragmentManager().findFragmentByTag("ListOfEventsFragments"));
+        transaction.remove(getFragmentManager().findFragmentByTag("ListOfEventsFragment"));
         transaction.add(R.id.fragment_container,addEventFrag);
         transaction.commit();
+        AddEventButton.setVisible(false);
     }
 
     @Override
     public void onBackPressed() {
         if(getFragmentManager().getBackStackEntryCount() == 1)
             this.finish();
+        else {
+            Fragment fragment = getFragmentManager().findFragmentByTag("AddEventFragment");
+            if(fragment != null) {
+                if (getFragmentManager().findFragmentByTag("AddEventFragment").isVisible())
+                    AddEventButton.setVisible(true);
+            }
+        }
         super.onBackPressed();
     }
 

@@ -20,6 +20,10 @@ import java.util.Calendar;
  */
 public class AddEventFragment extends Fragment {
 
+    interface AddEventDelegate {
+        public void add();
+    }
+
     EditText EventName;
     EditText EventExplanation;
     EditText EventAddress;
@@ -29,9 +33,15 @@ public class AddEventFragment extends Fragment {
 
     Button Sdate,Stime,Edate,Etime;
 
+    AddEventDelegate delegate;
+
     public AddEventFragment()
     {
         // Required empty public constructor
+    }
+
+    public void setDelegate(AddEventDelegate delegate) {
+        this.delegate = delegate;
     }
 
     public void showTimePickerDialog()
