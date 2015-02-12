@@ -52,7 +52,7 @@ public class Model
                         object.getString("EventName"),
                         object.getString("UserName"),
                         object.getString("EventExplanation"),
-                        object.getString("Register"),
+                        object.getString("CreateDate"),
                         object.getString("StartTime"),
                         object.getString("EndTime"));
                 events.add(event);

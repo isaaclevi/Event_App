@@ -78,9 +78,10 @@ public class ListOfEventsFragment extends Fragment
             if(convertView == null)
             {
                 LayoutInflater inflater = getActivity().getLayoutInflater();
-                convertView = inflater.inflate(R.layout.row_event_layout,null);
+                convertView = inflater.inflate(R.layout.row_event_layout, null);
             }
-            Event event= events.get(position);
+            Event event = events.get(position);
+
             TextView EventName = (TextView)convertView.findViewById(R.id.event_name);
             EventName.setText(event.EventName);
             TextView UserName = (TextView) convertView.findViewById(R.id.user_name);
@@ -89,22 +90,8 @@ public class ListOfEventsFragment extends Fragment
             EventExplanation.setText(event.EventExplanation);
             TextView TimeStarts = (TextView) convertView.findViewById(R.id.time_started);
             TimeStarts.setText(event.StartTime);
-            TextView TimeEnds= (TextView) convertView.findViewById(R.id.time_ends);
-            TimeEnds.setText(event.EndTime);
-            TextView EventTime = (TextView) convertView.findViewById(R.id.time_left);
-            Calendar thatDay = Calendar.getInstance();
-            
-            SimpleDateFormat format=new SimpleDateFormat("HH:mm:ss");
-            Date Sday,Eday;
-            try
-            {
-                //Sday=format.parse(event.StartTime);
-            }
-            catch (Exception e)
-            {}
-            //EventTime.setText();
 
-            return null;
+            return convertView;
         }
 
         public void updateList() {

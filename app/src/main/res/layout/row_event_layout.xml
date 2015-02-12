@@ -29,6 +29,14 @@
             android:layout_height="0dp"
             android:hint="Event Explanation"
             android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/time_started"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:hint="Start Time"
+            android:layout_weight="1"/>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -39,29 +47,6 @@
                 android:layout_height="wrap_content"
                 android:background="@android:drawable/ic_dialog_map"
                 android:layout_weight="1"/>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/time_left"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:hint="Time Left"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:id="@+id/time_started"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:hint="Start Time"
-                    android:layout_weight="1"/>
-                <TextView
-                    android:id="@+id/time_ends"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:hint="End Time"
-                    android:layout_weight="1"/>
-            </LinearLayout>
         </LinearLayout>
         <Button
             android:id="@+id/Details_Button"
