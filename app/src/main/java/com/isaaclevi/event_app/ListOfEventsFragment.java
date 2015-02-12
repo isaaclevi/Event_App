@@ -75,23 +75,22 @@ public class ListOfEventsFragment extends Fragment
         @Override
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            /*
             if(convertView == null)
             {
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 convertView = inflater.inflate(R.layout.row_event_layout,null);
             }
-            Event temp= events.elementAt(position);
-            TextView EventName=(TextView)convertView.findViewById(R.id.event_name);
-            EventName.setText(temp.EventName);
+            Event event= events.get(position);
+            TextView EventName = (TextView)convertView.findViewById(R.id.event_name);
+            EventName.setText(event.EventName);
             TextView UserName = (TextView) convertView.findViewById(R.id.user_name);
-            UserName.setText(temp.UserName);
-            TextView EventExplanation= (TextView) convertView.findViewById(R.id.event_explanation);
-            EventExplanation.setText(temp.EventExplanation);
-            TextView TimeStarts= (TextView) convertView.findViewById(R.id.time_started);
-            TimeStarts.setText(temp.StartTime.toString());
+            UserName.setText(event.UserName);
+            TextView EventExplanation = (TextView) convertView.findViewById(R.id.event_explanation);
+            EventExplanation.setText(event.EventExplanation);
+            TextView TimeStarts = (TextView) convertView.findViewById(R.id.time_started);
+            TimeStarts.setText(event.StartTime);
             TextView TimeEnds= (TextView) convertView.findViewById(R.id.time_ends);
-            TimeEnds.setText(temp.EndTime.toString());
+            TimeEnds.setText(event.EndTime);
             TextView EventTime = (TextView) convertView.findViewById(R.id.time_left);
             Calendar thatDay = Calendar.getInstance();
             
@@ -99,12 +98,12 @@ public class ListOfEventsFragment extends Fragment
             Date Sday,Eday;
             try
             {
-                //Sday=format.parse(temp.StartTime);
+                //Sday=format.parse(event.StartTime);
             }
             catch (Exception e)
             {}
             //EventTime.setText();
-            */
+
             return null;
         }
 
