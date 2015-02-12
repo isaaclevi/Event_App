@@ -27,7 +27,7 @@ public class MainScreen extends Activity {
 
         logInFragment = new LogInFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container, logInFragment);
+        transaction.add(R.id.fragment_container, logInFragment, "LogInFragment");
         transaction.addToBackStack(null);
         transaction.commit();
         OpenLogin();
@@ -69,7 +69,7 @@ public class MainScreen extends Activity {
                 RegisterFragment registerFragment = new RegisterFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.remove(logInFragment);
-                transaction.add(R.id.fragment_container, registerFragment);
+                transaction.add(R.id.fragment_container, registerFragment, "RegisterFragment");
                 transaction.addToBackStack(null);
                 transaction.commit();
 
@@ -95,7 +95,7 @@ public class MainScreen extends Activity {
                         EventDetailsFragment detailsFragment = new EventDetailsFragment();
                         FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.remove(eventsFragment);
-                        transaction.add(R.id.fragment_container, detailsFragment);
+                        transaction.add(R.id.fragment_container, detailsFragment, "EventDetailsFragment");
                         transaction.addToBackStack(null);
                         transaction.commit();
                         AddEventButton.setVisible(false);
@@ -103,7 +103,7 @@ public class MainScreen extends Activity {
                 });
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.remove(logInFragment);
-                transaction.add(R.id.fragment_container, eventsFragment);
+                transaction.add(R.id.fragment_container, eventsFragment, "ListOfEventsFragment");
                 transaction.addToBackStack(null);
                 transaction.commit();
                 AddEventButton.setVisible(true);
