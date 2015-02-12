@@ -7,7 +7,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.Toast;
 
 
@@ -15,8 +14,8 @@ public class MainScreen extends Activity {
 
     Model model;
     LogInFragment logInFragment;
-    AddEventFragment AddEventFrag;
-    MenuItem AddEventBTN;
+    AddEventFragment addEventFragment;
+    MenuItem AddEventButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,20 +59,23 @@ public class MainScreen extends Activity {
 
             @Override
             public void loginClick() {
-                ListOfEventsFragment eventsFragment = new ListOfEventsFragment();
+                final ListOfEventsFragment eventsFragment = new ListOfEventsFragment();
+                eventsFragment.SetListOfEventsDelegate(new ListOfEventsFragment.ListOfEventsDelegate() {
+                    @Override
+                    public void viewEvent(Event event) {
+                        EventDetailsFragment detailsFragment = new EventDetailsFragment();
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.remove(eventsFragment);
+                        transaction.add(R.id.fragment_container, detailsFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                });
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.remove(logInFragment);
                 transaction.add(R.id.fragment_container, eventsFragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
-
-                eventsFragment.SetListOfEventsDelegate(new ListOfEventsFragment.ListOfEventsDelegate() {
-                    @Override
-                    public void viewEvent(Event event) {
-                        EventDetailsFragment detailsFragment = new EventDetailsFragment();
-
-                    }
-                });
             }
         });
     }
@@ -82,7 +84,7 @@ public class MainScreen extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_screen, menu);
-        AddEventBTN = menu.findItem(R.id.add_event_to_list);
+        AddEventButton = menu.findItem(R.id.add_event_to_list);
         return true;
     }
 
@@ -96,7 +98,7 @@ public class MainScreen extends Activity {
         switch (id)
         {
             case R.id.add_event_to_list:
-                AddEventBTN.setVisible(false);
+                AddEventButton.setVisible(false);
 
                 break;
             case R.id.action_settings:
