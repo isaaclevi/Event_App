@@ -1,6 +1,4 @@
 package com.isaaclevi.event_app;
-
-
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -8,19 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.Calendar;
-
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AddEventFragment extends Fragment {
+public class AddEventFragment extends Fragment
+{
 
-    interface AddEventDelegate {
+    interface AddEventDelegate
+    {
         public void add();
     }
 
@@ -31,7 +27,7 @@ public class AddEventFragment extends Fragment {
     String PersonName;
     String NickName;
 
-    Button Sdate,Stime,Edate,Etime;
+    Button Sdate, Stime, Edate, Etime;
 
     AddEventDelegate delegate;
 
@@ -46,13 +42,14 @@ public class AddEventFragment extends Fragment {
 
     public void showTimePickerDialog()
     {
-        DialogFragment newFragment = new TimePickerFragment();
-        newFragment.show(getFragmentManager(), "timePicker");
+        DialogFragment TimePickerFragment = new TimePickerFragment();
+        TimePickerFragment.show(getFragmentManager(), "timePicker");
     }
 
-    public void showDatePickerDialog() {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getFragmentManager(), "datePicker");
+    public void showDatePickerDialog()
+    {
+        DialogFragment DatePickerFragment = new DatePickerFragment();
+        DatePickerFragment.show(getFragmentManager(), "datePicker");
     }
 
     public void getUserNameAndNickName(String UserName,String NickName)
@@ -60,8 +57,6 @@ public class AddEventFragment extends Fragment {
         this.PersonName = UserName;
         this.NickName = NickName;
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
@@ -113,7 +108,21 @@ public class AddEventFragment extends Fragment {
                 showTimePickerDialog();
             }
         });
+
         return root;
     }
 
+    @Override
+    public void onBackPressed() {
+        if(getFragmentManager().findFragmentByTag("AddEventFragment") == null)
+            getActivity().finish();
+        else {
+            Fragment fragment = getFragmentManager().findFragmentByTag("AddEventFragment");
+            if(fragment != null)
+            {
+                
+            }
+        }
+        super.onBackPressed();
+    }
 }
