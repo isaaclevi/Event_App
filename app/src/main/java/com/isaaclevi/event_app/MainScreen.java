@@ -122,7 +122,8 @@ public class MainScreen extends Activity {
         });
         FragmentTransaction transaction=getFragmentManager().beginTransaction();
         transaction.remove(getFragmentManager().findFragmentByTag("ListOfEventsFragment"));
-        transaction.add(R.id.fragment_container,addEventFrag);
+        transaction.add(R.id.fragment_container,addEventFrag,"AddEventFragment");
+        transaction.addToBackStack("null");
         transaction.commit();
         AddEventButton.setVisible(false);
     }
@@ -135,7 +136,11 @@ public class MainScreen extends Activity {
             Fragment fragment = getFragmentManager().findFragmentByTag("AddEventFragment");
             if(fragment != null) {
                 if (getFragmentManager().findFragmentByTag("AddEventFragment").isVisible())
+                {
                     AddEventButton.setVisible(true);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    getFragmentManager().popBackStack();
+                }
             }
         }
         super.onBackPressed();
