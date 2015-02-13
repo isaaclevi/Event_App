@@ -1,7 +1,7 @@
 package com.isaaclevi.event_app;
-import android.app.DialogFragment;
-import android.os.Bundle;
+
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +26,9 @@ public class AddEventFragment extends Fragment
     TextView UserName;
     String PersonName;
     String NickName;
-
     Button Sdate, Stime, Edate, Etime;
+
+    boolean startOrEnd;
 
     AddEventDelegate delegate;
 
@@ -42,14 +43,16 @@ public class AddEventFragment extends Fragment
 
     public void showTimePickerDialog()
     {
-        DialogFragment TimePickerFragment = new TimePickerFragment();
-        TimePickerFragment.show(getFragmentManager(), "timePicker");
+        TimePickerFragment fragment = new TimePickerFragment();
+        fragment.show(getFragmentManager(), "timePicker");
+        fragment.setStartOrEnd(startOrEnd);
     }
 
     public void showDatePickerDialog()
     {
-        DialogFragment DatePickerFragment = new DatePickerFragment();
-        DatePickerFragment.show(getFragmentManager(), "datePicker");
+        DatePickerFragment fragment = new DatePickerFragment();
+        fragment.show(getFragmentManager(), "datePicker");
+        fragment.setStartOrEnd(startOrEnd);
     }
 
     public void getUserNameAndNickName(String UserName,String NickName)
@@ -79,6 +82,8 @@ public class AddEventFragment extends Fragment
             public void onClick(View v)
             {
                 showDatePickerDialog();
+                startOrEnd = true;
+
             }
         });
 
@@ -88,6 +93,7 @@ public class AddEventFragment extends Fragment
             public void onClick(View v)
             {
                 showTimePickerDialog();
+                startOrEnd = true;
             }
         });
 
@@ -97,6 +103,7 @@ public class AddEventFragment extends Fragment
             public void onClick(View v)
             {
                 showDatePickerDialog();
+                startOrEnd = false;
             }
         });
 
@@ -106,6 +113,7 @@ public class AddEventFragment extends Fragment
             public void onClick(View v)
             {
                 showTimePickerDialog();
+                startOrEnd = false;
             }
         });
 
