@@ -17,7 +17,8 @@ import java.util.Vector;
 
 public class Model
 {
-    private static Model instance = new Model();
+    private final static Model instance = new Model();
+    private boolean valid = true;
 
     private Model()
     {}
@@ -25,6 +26,14 @@ public class Model
     public static Model getInstance()
     {
         return instance;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 
     //-------------------------------------------------------
@@ -68,12 +77,11 @@ public class Model
         query.whereEqualTo("Nickname", nickname);
         try {
             List<ParseObject> parseObjects = query.find();
-            if (parseObjects.size() == 0)
-                return true;
+            Model.getInstance().setValid(parseObjects.size() == 0);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return false;
+        return isValid();
     }
 
     public boolean checkPhone(final String phone) {
@@ -81,28 +89,29 @@ public class Model
         query.whereEqualTo("PhoneNumber", phone);
         try {
             List<ParseObject> parseObjects = query.find();
-            if (parseObjects.size() == 0)
-                return true;
+            Model.getInstance().setValid(parseObjects.size() == 0);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return false;
+        return isValid();
     }
 
-    public boolean validateUser(String phoneNumber, final String password) {
+    public void validateUser(String phoneNumber, final String password) {
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("UsersTable");
         query.whereEqualTo("PhoneNumber", phoneNumber);
         try {
             List<ParseObject> parseObjects = query.find();
             if (parseObjects.size() == 0)
-                return false;
+                Model.getInstance().setValid(false);
             else {
                 ParseObject parseObject = parseObjects.get(0);
-                return !(password.equals(parseObject.getString("Password")));
+                if(password.equals(parseObject.getString("Password")))
+                    Model.getInstance().setValid(false);
+                else
+                    Model.getInstance().setValid(true);
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return false;
     }
 }
