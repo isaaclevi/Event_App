@@ -63,16 +63,13 @@ public class LogInFragment extends Fragment
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 Model.getInstance().validateUser(phoneNumber.getText().toString(), password.getText().toString());
                 if(Model.getInstance().isValid())
                     phoneNumber.setError("Wrong Phone Number or Password!");
                 else {
                     if (loginDelegate != null)
-                    {
                         loginDelegate.loginClick();
-                    }
                 }
             }
         });
