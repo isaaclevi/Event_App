@@ -16,6 +16,7 @@ public class MainScreen extends Activity {
     Model model;
     LogInFragment logInFragment;
     MenuItem AddEventButton;
+    User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,7 @@ public class MainScreen extends Activity {
                 OpenAddEvent();
                 break;
             case R.id.action_settings:
+                viewSettings();
                 break;
             default:
                 break;
@@ -108,6 +110,11 @@ public class MainScreen extends Activity {
                 transaction.commit();
                 AddEventButton.setVisible(true);
             }
+
+            @Override
+            public void setUser(User user) {
+                currentUser = user;
+            }
         });
     }
 
@@ -138,12 +145,11 @@ public class MainScreen extends Activity {
                 if (getFragmentManager().findFragmentByTag("AddEventFragment").isVisible())
                 {
                     AddEventButton.setVisible(true);
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    getFragmentManager().popBackStack();
+                    //getFragmentManager().popBackStack(); ----> this line isn't needed in my humble opinion
                 }
             }
         }
-        super.onBackPressed();
+        super.onBackPressed(); //------------------------------> because this line does it automatically
     }
 
     public void viewSettings() {

@@ -1,8 +1,5 @@
 package com.isaaclevi.event_app;
 
-/**
- * Created by isaac on 31/01/2015.
- */
 public class User
 {
     String Nickname;

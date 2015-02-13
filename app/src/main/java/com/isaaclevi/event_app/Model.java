@@ -18,7 +18,6 @@ import java.util.Vector;
 public class Model
 {
     private static Model instance = new Model();
-    private boolean valid = true;
 
     private Model()
     {}
@@ -26,14 +25,6 @@ public class Model
     public static Model getInstance()
     {
         return instance;
-    }
-
-    public boolean isValid() {
-        return valid;
-    }
-
-    public void setValid(boolean valid) {
-        this.valid = valid;
     }
 
     //-------------------------------------------------------
@@ -73,15 +64,15 @@ public class Model
     }
 
     public boolean checkNickname(final String nickname) {
-        final ParseQuery<ParseObject> query = ParseQuery.getQuery("UsersTable");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("UsersTable");
         query.whereEqualTo("Nickname", nickname);
         try {
             List<ParseObject> parseObjects = query.find();
-            Model.getInstance().setValid(parseObjects.size() == 0);
+            return (parseObjects.size() == 0);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return isValid();
+        return false;
     }
 
     public boolean checkPhone(final String phone) {
@@ -89,15 +80,15 @@ public class Model
         query.whereEqualTo("PhoneNumber", phone);
         try {
             List<ParseObject> parseObjects = query.find();
-            Model.getInstance().setValid(parseObjects.size() == 0);
+            return (parseObjects.size() == 0);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return isValid();
+        return false;
     }
 
     public boolean validateUser(String phoneNumber, final String password) {
-        final ParseQuery<ParseObject> query = ParseQuery.getQuery("UsersTable");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("UsersTable");
         query.whereEqualTo("PhoneNumber", phoneNumber);
         try {
             List<ParseObject> parseObjects = query.find();
@@ -112,5 +103,20 @@ public class Model
             e.printStackTrace();
         }
         return false;
+    }
+
+    public User getUser(String phoneNumber) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("UsersTable");
+        query.whereEqualTo("PhoneNumber", phoneNumber);
+        try {
+            ParseObject parseObject = query.getFirst();
+            return new User(parseObject.getString("Nickname"),
+                    parseObject.getString("PersonName"),
+                    parseObject.getString("PhoneNumber"),
+                    parseObject.getString("Password"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

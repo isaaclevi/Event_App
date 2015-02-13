@@ -21,6 +21,7 @@ public class LogInFragment extends Fragment
     {
         void regClick();
         void loginClick();
+        void setUser(User user);
     }
 
     public LogInFragment()
@@ -53,6 +54,11 @@ public class LogInFragment extends Fragment
         login = (Button) root.findViewById(R.id.log_in_btn);
         rememberMe = (CheckBox) root.findViewById(R.id.remember_pass_box);
 
+        password.setText("");
+
+        setEmptyError(phoneNumber);
+        setEmptyError(password);
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,11 +70,15 @@ public class LogInFragment extends Fragment
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!Model.getInstance().validateUser(phoneNumber.getText().toString(), password.getText().toString()))
-                    phoneNumber.setError("Wrong Phone Number or Password!");
-                else {
-                    if (loginDelegate != null)
-                        loginDelegate.loginClick();
+                if(!phoneNumber.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
+                    if (!Model.getInstance().validateUser(phoneNumber.getText().toString(), password.getText().toString()))
+                        phoneNumber.setError("Wrong Phone Number or Password!");
+                    else {
+                        if (loginDelegate != null) {
+                            loginDelegate.setUser(Model.getInstance().getUser(phoneNumber.getText().toString()));
+                            loginDelegate.loginClick();
+                        }
+                    }
                 }
             }
         });
@@ -82,5 +92,12 @@ public class LogInFragment extends Fragment
         });
 
         return root;
+    }
+
+    public void setEmptyError(EditText text)
+    {
+        if(text.getText().toString().isEmpty()) {
+            text.setError("This Field Cannot Be Empty!");
+        }
     }
 }
