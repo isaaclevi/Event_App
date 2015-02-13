@@ -111,18 +111,4 @@ public class AddEventFragment extends Fragment
 
         return root;
     }
-
-    @Override
-    public void onBackPressed() {
-        if(getFragmentManager().findFragmentByTag("AddEventFragment") == null)
-            getActivity().finish();
-        else {
-            Fragment fragment = getFragmentManager().findFragmentByTag("AddEventFragment");
-            if(fragment != null)
-            {
-                
-            }
-        }
-        super.onBackPressed();
-    }
 }
