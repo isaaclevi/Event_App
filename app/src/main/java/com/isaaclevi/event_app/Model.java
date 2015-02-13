@@ -110,7 +110,10 @@ public class Model
                 else
                     Model.getInstance().setValid(true);
             }
-        } catch (ParseException e) {
+        }
+
+        catch (ParseException e)
+        {
             e.printStackTrace();
         }
     }

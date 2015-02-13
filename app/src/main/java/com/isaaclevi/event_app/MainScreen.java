@@ -15,6 +15,7 @@ public class MainScreen extends Activity {
 
     Model model;
     LogInFragment logInFragment;
+    User user;
     MenuItem AddEventButton;
 
     @Override
@@ -87,9 +88,11 @@ public class MainScreen extends Activity {
             }
 
             @Override
-            public void loginClick() {
+            public void loginClick()
+            {
                 final ListOfEventsFragment eventsFragment = new ListOfEventsFragment();
-                eventsFragment.SetListOfEventsDelegate(new ListOfEventsFragment.ListOfEventsDelegate() {
+                eventsFragment.SetListOfEventsDelegate(new ListOfEventsFragment.ListOfEventsDelegate()
+                {
                     @Override
                     public void viewEvent(Event event) {
                         EventDetailsFragment detailsFragment = new EventDetailsFragment();
@@ -140,6 +143,7 @@ public class MainScreen extends Activity {
                     AddEventButton.setVisible(true);
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     getFragmentManager().popBackStack();
+                    this.OpenLogin();
                 }
             }
         }
