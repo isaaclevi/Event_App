@@ -17,7 +17,7 @@ import java.util.Vector;
 
 public class Model
 {
-    private final static Model instance = new Model();
+    private static Model instance = new Model();
     private boolean valid = true;
 
     private Model()
@@ -96,22 +96,21 @@ public class Model
         return isValid();
     }
 
-    public void validateUser(String phoneNumber, final String password) {
+    public boolean validateUser(String phoneNumber, final String password) {
         final ParseQuery<ParseObject> query = ParseQuery.getQuery("UsersTable");
         query.whereEqualTo("PhoneNumber", phoneNumber);
         try {
             List<ParseObject> parseObjects = query.find();
             if (parseObjects.size() == 0)
-                Model.getInstance().setValid(false);
+                return false;
             else {
                 ParseObject parseObject = parseObjects.get(0);
-                if(password.equals(parseObject.getString("Password")))
-                    Model.getInstance().setValid(false);
-                else
-                    Model.getInstance().setValid(true);
+                return (password.equals(parseObject.getString("Password")));
+
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return false;
     }
 }
