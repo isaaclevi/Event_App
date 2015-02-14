@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,11 +26,9 @@ public class AddEventFragment extends Fragment
     EditText EventExplanation;
     EditText EventAddress;
     TextView UserName;
-    String PersonName;
-    String NickName;
     Button Sdate, Stime, Edate, Etime;
     User currentUser;
-    boolean startOrEnd;
+    boolean startOrEnd;//flag to know if start button or end button preset
 
     AddEventDelegate delegate;
 
@@ -82,7 +82,7 @@ public class AddEventFragment extends Fragment
             {
                 showDatePickerDialog();
                 startOrEnd = true;
-
+                Sdate.setText("Start Date:"+PickerHelper.getInstance().getStartDate());
             }
         });
 
@@ -93,6 +93,7 @@ public class AddEventFragment extends Fragment
             {
                 showTimePickerDialog();
                 startOrEnd = true;
+                Stime.setText("Start Time:"+PickerHelper.getInstance().getStartTime());
             }
         });
 
@@ -103,6 +104,7 @@ public class AddEventFragment extends Fragment
             {
                 showDatePickerDialog();
                 startOrEnd = false;
+                Edate.setText("End Date:"+PickerHelper.getInstance().getEndDate());
             }
         });
 
@@ -113,9 +115,9 @@ public class AddEventFragment extends Fragment
             {
                 showTimePickerDialog();
                 startOrEnd = false;
+                Etime.setText("End Time:"+PickerHelper.getInstance().getEndTime());
             }
         });
-
         return root;
     }
 }

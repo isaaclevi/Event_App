@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
 
+import java.sql.Time;
 import java.util.Calendar;
+import java.util.Date;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener
 {
@@ -33,7 +35,8 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
             PickerHelper.getInstance().setEndTime(hourOfDay, minute);
     }
 
-    public void setStartOrEnd(boolean startOrEnd) {
+    public void setStartOrEnd(boolean startOrEnd)
+    {
         this.startOrEnd = startOrEnd;
     }
 }

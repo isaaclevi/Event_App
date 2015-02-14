@@ -20,12 +20,13 @@ public class PickerHelper {
         return instance;
     }
 
-    public void setStartDate(int year, int month, int day) {
-        startDate = day + "/" + month + "/" + year;
+    public void setStartDate(int year, int month, int day)
+    {
+        startDate = day + "/" + (month+1) + "/" + year;
     }
 
     public void setEndDate(int year, int month, int day) {
-        endDate = day + "/" + month + "/" + year;
+        endDate = day + "/" + (month+1) + "/" + year;
     }
 
     public void setStartTime(int hourOfDay, int minute) {

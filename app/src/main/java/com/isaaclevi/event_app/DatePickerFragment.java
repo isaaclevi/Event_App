@@ -35,7 +35,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
             PickerHelper.getInstance().setEndDate(year, month, day);
     }
 
-    public void setStartOrEnd(boolean startOrEnd) {
+    public void setStartOrEnd(boolean startOrEnd)
+    {
         this.startOrEnd = startOrEnd;
     }
 }
