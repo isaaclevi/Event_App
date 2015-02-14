@@ -35,17 +35,15 @@ public class Model
 
     public Vector<Event> getAllEvents() {
         Vector<Event> events = new Vector<>();
-        ParseQuery query = new ParseQuery("Events");
+        ParseQuery query = ParseQuery.getQuery("Events");
         try {
-            List<ParseObject> result = query.find();
-            for(ParseObject object: result){
+            List<ParseObject> parseObjects = query.find();
+            for(ParseObject object: parseObjects){
                 Event event = new Event(object.getString("EventId"),
                         object.getString("EventName"),
                         object.getString("UserName"),
                         object.getString("EventExplanation"),
-                        object.getString("CreateDate"),
-                        object.getString("StartTime"),
-                        object.getString("EndTime"));
+                        object.getString("EventTime"));
                 events.add(event);
             }
         } catch (ParseException e) {

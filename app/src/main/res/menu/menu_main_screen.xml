@@ -3,10 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainScreen">
 
-    <item android:id="@+id/add_event_to_list"
-        android:title="Add Event"
+    <item android:id="@+id/save_event_location"
+        android:title="@string/save_location"
         android:orderInCategory="101"
-        android:showAsAction="always"
+        android:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_save"/>
+
+    <item android:id="@+id/add_event_to_list"
+        android:title="@string/add_event"
+        android:orderInCategory="101"
+        android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_input_add"/>
 
     <item android:id="@+id/action_settings"

@@ -12,8 +12,6 @@ import java.util.Calendar;
  */
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener
 {
-    boolean startOrEnd;
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState)
     {
@@ -29,14 +27,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     public void onDateSet(DatePicker view, int year, int month, int day)
     {
-        if(startOrEnd)
-            PickerHelper.getInstance().setStartDate(year, month, day);
-        else
-            PickerHelper.getInstance().setEndDate(year, month, day);
-    }
-
-    public void setStartOrEnd(boolean startOrEnd)
-    {
-        this.startOrEnd = startOrEnd;
+        PickerHelper.getInstance().setDate(year, month, day);
     }
 }

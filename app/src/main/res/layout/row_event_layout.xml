@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
@@ -39,18 +39,10 @@
 
             <TextView
                 android:id="@+id/time_started"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:hint="Start Time"
                 android:layout_weight="1"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.gms.maps.MapView
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
-            </com.google.android.gms.maps.MapView>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -58,10 +50,10 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp">
         <Button
-            android:id="@+id/Details_Button"
+            android:id="@+id/view_location_button"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Details"
+            android:text="View Location"
             android:layout_gravity="center_horizontal"
             android:ems="10"
             android:layout_margin="15dp"/>

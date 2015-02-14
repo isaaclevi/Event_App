@@ -1,18 +1,16 @@
 package com.isaaclevi.event_app;
 
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Vector;
 
 
@@ -22,7 +20,7 @@ import java.util.Vector;
 public class ListOfEventsFragment extends Fragment
 {
     interface ListOfEventsDelegate {
-        void viewEvent(Event event);
+        void viewEventLocation(Event event);
     }
 
     private ListOfEventsDelegate listOfEventsDelegate;
@@ -73,24 +71,31 @@ public class ListOfEventsFragment extends Fragment
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
+        public View getView(int position, View convertView, ViewGroup parent) {
             if(convertView == null)
             {
                 LayoutInflater inflater = getActivity().getLayoutInflater();
                 convertView = inflater.inflate(R.layout.row_event_layout, null);
             }
-            Event event = events.get(position);
+            final Event event = events.get(position);
 
-            TextView EventName = (TextView)convertView.findViewById(R.id.event_name);
+            TextView EventName = (TextView) convertView.findViewById(R.id.event_name);
             EventName.setText(event.EventName);
             TextView UserName = (TextView) convertView.findViewById(R.id.user_name);
             UserName.setText(event.UserName);
             TextView EventExplanation = (TextView) convertView.findViewById(R.id.event_explanation);
             EventExplanation.setText(event.EventExplanation);
             TextView TimeStarts = (TextView) convertView.findViewById(R.id.time_started);
-            TimeStarts.setText(event.StartTime);
-
+            TimeStarts.setText(event.Time);
+            Button LocationButton = (Button) convertView.findViewById(R.id.view_location_button);
+            LocationButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listOfEventsDelegate != null) {
+                        listOfEventsDelegate.viewEventLocation(event);
+                    }
+                }
+            });
             return convertView;
         }
 

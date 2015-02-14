@@ -10,10 +10,8 @@ public class PickerHelper {
 
     private static PickerHelper instance = new PickerHelper();
 
-    Button startDateButton;
-    Button startTimeButton;
-    Button endDateButton;
-    Button endTimeButton;
+    Button dateButton;
+    Button timeButton;
 
     public PickerHelper() {
     }
@@ -22,36 +20,19 @@ public class PickerHelper {
         return instance;
     }
 
-    public void setStartDate(int year, int month, int day)
-    {
-        startDateButton.setText(day + "/" + (month+1) + "/" + year);
+    public void setDate(int year, int month, int day) {
+        dateButton.setText(day + "/" + (month + 1) + "/" + year);
     }
 
-    public void setEndDate(int year, int month, int day) {
-        endDateButton.setText(day + "/" + (month+1) + "/" + year);
+    public void setTime(int hourOfDay, int minute) {
+        timeButton.setText(hourOfDay + ":" + minute);
     }
 
-    public void setStartTime(int hourOfDay, int minute) {
-        startTimeButton.setText(hourOfDay + ":" + minute);
+    public void setDateButton(Button dateButton) {
+        this.dateButton = dateButton;
     }
 
-    public void setEndTime(int hourOfDay, int minute) {
-        endTimeButton.setText(hourOfDay + ":" + minute);
-    }
-
-    public void setStartDateButton(Button startDateButton) {
-        this.startDateButton = startDateButton;
-    }
-
-    public void setStartTimeButton(Button startTimeButton) {
-        this.startTimeButton = startTimeButton;
-    }
-
-    public void setEndDateButton(Button endDateButton) {
-        this.endDateButton = endDateButton;
-    }
-
-    public void setEndTimeButton(Button endTimeButton) {
-        this.endTimeButton = endTimeButton;
+    public void setTimeButton(Button timeButton) {
+        this.timeButton = timeButton;
     }
 }

@@ -7,14 +7,10 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.widget.TimePicker;
 
-import java.sql.Time;
 import java.util.Calendar;
-import java.util.Date;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener
 {
-    boolean startOrEnd;
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current time as the default values for the picker
@@ -29,14 +25,6 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute)
     {
-        if(startOrEnd)
-            PickerHelper.getInstance().setStartTime(hourOfDay, minute);
-        else
-            PickerHelper.getInstance().setEndTime(hourOfDay, minute);
-    }
-
-    public void setStartOrEnd(boolean startOrEnd)
-    {
-        this.startOrEnd = startOrEnd;
+        PickerHelper.getInstance().setTime(hourOfDay, minute);
     }
 }

@@ -7,5 +7,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_blank_fragment">hello</string>
     <string name="API_KEY">friendsevent3</string>
+    <string name="save_location">Save Location</string>
+    <string name="add_event">Add Event</string>
 
 </resources>
