@@ -6,10 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,25 +62,32 @@ public class AddEventFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        View root=inflater.inflate(R.layout.fragment_add_event, container, false);
+        View root = inflater.inflate(R.layout.fragment_add_event, container, false);
         UserName = (TextView)root.findViewById(R.id.add_user_name);
-        UserName.setText(currentUser.PersonName+"("+currentUser.NickName+")");
         EventName = (EditText) root.findViewById(R.id.add_event_name);
         EventExplanation = (EditText) root.findViewById(R.id.add_event_explanation);
         EventAddress = (EditText) root.findViewById(R.id.add_event_address);
-        Sdate = (Button) root.findViewById(R.id.add_event_start_date_time);
-        Stime = (Button) root.findViewById(R.id.add_event_start_hours_seconds_time);
-        Edate = (Button) root.findViewById(R.id.add_event_end_date_time);
-        Etime = (Button) root.findViewById(R.id.add_event_end_hours_seconds_time);
+
+        UserName.setText(currentUser.PersonName+"("+currentUser.NickName+")");
+
+        Sdate = (Button) root.findViewById(R.id.add_event_start_date);
+        Stime = (Button) root.findViewById(R.id.add_event_start_time);
+        Edate = (Button) root.findViewById(R.id.add_event_end_date);
+        Etime = (Button) root.findViewById(R.id.add_event_end_time);
+
+        final TextView StartDateText = (TextView) root.findViewById(R.id.start_date_text);
+        final TextView StartTimeText = (TextView) root.findViewById(R.id.start_time_text);
+        final TextView EndDateText = (TextView) root.findViewById(R.id.end_date_text);
+        final TextView EndTimeText = (TextView) root.findViewById(R.id.end_time_text);
 
         Sdate.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                showDatePickerDialog();
                 startOrEnd = true;
-                Sdate.setText("Start Date:"+PickerHelper.getInstance().getStartDate());
+                showDatePickerDialog();
+                StartDateText.setText("Start Date:"+PickerHelper.getInstance().getStartDate());
             }
         });
 
@@ -91,9 +96,9 @@ public class AddEventFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                showTimePickerDialog();
                 startOrEnd = true;
-                Stime.setText("Start Time:"+PickerHelper.getInstance().getStartTime());
+                showTimePickerDialog();
+                StartTimeText.setText("Start Time:"+PickerHelper.getInstance().getStartTime());
             }
         });
 
@@ -102,9 +107,9 @@ public class AddEventFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                showDatePickerDialog();
                 startOrEnd = false;
-                Edate.setText("End Date:"+PickerHelper.getInstance().getEndDate());
+                showDatePickerDialog();
+                EndDateText.setText("End Date:"+PickerHelper.getInstance().getEndDate());
             }
         });
 
@@ -113,11 +118,12 @@ public class AddEventFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                showTimePickerDialog();
                 startOrEnd = false;
-                Etime.setText("End Time:"+PickerHelper.getInstance().getEndTime());
+                showTimePickerDialog();
+                EndTimeText.setText("End Time:"+PickerHelper.getInstance().getEndTime());
             }
         });
+
         return root;
     }
 }
