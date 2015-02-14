@@ -56,7 +56,7 @@ public class Model
 
     public void registerUser(User user) {
         ParseObject ParseUser = new ParseObject("UsersTable");
-        ParseUser.put("Nickname", user.Nickname);
+        ParseUser.put("Nickname", user.NickName);
         ParseUser.put("PersonName", user.PersonName);
         ParseUser.put("PhoneNumber", user.PhoneNumber);
         ParseUser.put("Password", user.Password);

@@ -120,6 +120,7 @@ public class MainScreen extends Activity {
 
     private void OpenAddEvent() {
         AddEventFragment addEventFrag=new AddEventFragment();
+        addEventFrag.SetCurrentUser(currentUser);
         addEventFrag.setDelegate(new AddEventFragment.AddEventDelegate() {
             @Override
             public void add() {
