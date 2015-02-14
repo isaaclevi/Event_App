@@ -86,7 +86,7 @@ public class ListOfEventsFragment extends Fragment
             TextView EventExplanation = (TextView) convertView.findViewById(R.id.event_explanation);
             EventExplanation.setText(event.EventExplanation);
             TextView TimeStarts = (TextView) convertView.findViewById(R.id.time_started);
-            TimeStarts.setText(event.Time);
+            TimeStarts.setText(event.EventTime);
             Button LocationButton = (Button) convertView.findViewById(R.id.view_location_button);
             LocationButton.setOnClickListener(new View.OnClickListener() {
                 @Override
