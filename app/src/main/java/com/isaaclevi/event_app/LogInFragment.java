@@ -56,9 +56,6 @@ public class LogInFragment extends Fragment
 
         password.setText("");
 
-        setEmptyError(phoneNumber);
-        setEmptyError(password);
-
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +67,9 @@ public class LogInFragment extends Fragment
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setEmptyError(phoneNumber);
+                setEmptyError(password);
+
                 if(!phoneNumber.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
                     if (!Model.getInstance().validateUser(phoneNumber.getText().toString(), password.getText().toString()))
                         phoneNumber.setError("Wrong Phone Number or Password!");
