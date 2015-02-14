@@ -4,14 +4,16 @@ package com.isaaclevi.event_app;
  * Created by Ariel Tzentner on 2/13/2015.
  */
 
+import android.widget.Button;
+
 public class PickerHelper {
 
     private static PickerHelper instance = new PickerHelper();
 
-    String startDate = "";
-    String endDate = "";
-    String startTime = "";
-    String endTime = "";
+    Button startDateButton;
+    Button startTimeButton;
+    Button endDateButton;
+    Button endTimeButton;
 
     public PickerHelper() {
     }
@@ -22,34 +24,34 @@ public class PickerHelper {
 
     public void setStartDate(int year, int month, int day)
     {
-        startDate = day + "/" + (month+1) + "/" + year;
+        startDateButton.setText(day + "/" + (month+1) + "/" + year);
     }
 
     public void setEndDate(int year, int month, int day) {
-        endDate = day + "/" + (month+1) + "/" + year;
+        endDateButton.setText(day + "/" + (month+1) + "/" + year);
     }
 
     public void setStartTime(int hourOfDay, int minute) {
-        startTime = hourOfDay + ":" + minute;
+        startTimeButton.setText(hourOfDay + ":" + minute);
     }
 
     public void setEndTime(int hourOfDay, int minute) {
-        endTime = hourOfDay + ":" + minute;
+        endTimeButton.setText(hourOfDay + ":" + minute);
     }
 
-    public String getStartDate() {
-        return startDate;
+    public void setStartDateButton(Button startDateButton) {
+        this.startDateButton = startDateButton;
     }
 
-    public String getEndDate() {
-        return endDate;
+    public void setStartTimeButton(Button startTimeButton) {
+        this.startTimeButton = startTimeButton;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public void setEndDateButton(Button endDateButton) {
+        this.endDateButton = endDateButton;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public void setEndTimeButton(Button endTimeButton) {
+        this.endTimeButton = endTimeButton;
     }
 }

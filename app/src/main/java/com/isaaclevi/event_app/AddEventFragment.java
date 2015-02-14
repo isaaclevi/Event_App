@@ -24,7 +24,9 @@ public class AddEventFragment extends Fragment
     EditText EventExplanation;
     EditText EventAddress;
     TextView UserName;
-    Button Sdate, Stime, Edate, Etime;
+
+    Button StartDate, StartTime, EndDate, EndTime;
+
     User currentUser;
     boolean startOrEnd; //flag to know if start button or end button preset
 
@@ -70,52 +72,44 @@ public class AddEventFragment extends Fragment
 
         UserName.setText(currentUser.PersonName+"("+currentUser.NickName+")");
 
-        Sdate = (Button) root.findViewById(R.id.add_event_start_date);
-        Stime = (Button) root.findViewById(R.id.add_event_start_time);
-        Edate = (Button) root.findViewById(R.id.add_event_end_date);
-        Etime = (Button) root.findViewById(R.id.add_event_end_time);
+        StartDate = (Button) root.findViewById(R.id.add_event_start_date);
+        StartTime = (Button) root.findViewById(R.id.add_event_start_time);
+        EndDate = (Button) root.findViewById(R.id.add_event_end_date);
+        EndTime = (Button) root.findViewById(R.id.add_event_end_time);
 
-        Sdate.setOnClickListener(new View.OnClickListener()
-        {
+        StartDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 startOrEnd = true;
                 showDatePickerDialog();
-                Sdate.setText("Start Date:"+PickerHelper.getInstance().getStartDate());
+                PickerHelper.getInstance().setStartDateButton(StartDate);
             }
         });
 
-        Stime.setOnClickListener(new View.OnClickListener()
-        {
+        StartTime.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 startOrEnd = true;
                 showTimePickerDialog();
-                Stime.setText("Start Time:"+PickerHelper.getInstance().getStartTime());
+                PickerHelper.getInstance().setStartDateButton(StartTime);
             }
         });
 
-        Edate.setOnClickListener(new View.OnClickListener()
-        {
+        EndDate.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 startOrEnd = false;
                 showDatePickerDialog();
-                Edate.setText("End Date:"+PickerHelper.getInstance().getEndDate());
+                PickerHelper.getInstance().setStartDateButton(EndDate);
             }
         });
 
-        Etime.setOnClickListener(new View.OnClickListener()
-        {
+        EndTime.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 startOrEnd = false;
                 showTimePickerDialog();
-                Etime.setText("End Time:"+PickerHelper.getInstance().getEndTime());
+                PickerHelper.getInstance().setStartDateButton(EndTime);
             }
         });
 
