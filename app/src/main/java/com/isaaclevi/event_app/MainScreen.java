@@ -14,11 +14,13 @@ import android.widget.Toast;
 public class MainScreen extends FragmentActivity {
 
     public static FragmentManager fragmentManager;
+
     Model model;
     LogInFragment logInFragment;
     MenuItem AddEventButton;
     MenuItem SaveLocationButton;
     User currentUser;
+    EventDetailsFragment.EventDetailsFragmentDelegate delegate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +76,8 @@ public class MainScreen extends FragmentActivity {
     }
 
     private void saveLocation() {
-
+        if(delegate != null)
+            delegate.save();
     }
 
     public void openLogin() {
@@ -109,12 +112,6 @@ public class MainScreen extends FragmentActivity {
                     public void viewEventLocation(Event event) {
                         EventDetailsFragment detailsFragment = new EventDetailsFragment();
                         detailsFragment.setEvent(event);
-                        detailsFragment.setEventDetailsDelegate(new EventDetailsFragment.EventDetailsFragmentDelegate() {
-                            @Override
-                            public void save() {
-
-                            }
-                        });
                         FragmentTransaction transaction = fragmentManager.beginTransaction();
                         transaction.remove(eventsFragment);
                         transaction.add(R.id.fragment_container, detailsFragment, "EventDetailsFragment");
@@ -139,7 +136,7 @@ public class MainScreen extends FragmentActivity {
     }
 
     private void openAddEvent() {
-        AddEventFragment addEventFragment = new AddEventFragment();
+        final AddEventFragment addEventFragment = new AddEventFragment();
         addEventFragment.SetCurrentUser(currentUser);
         addEventFragment.setDelegate(new AddEventFragment.AddEventDelegate() {
             @Override
@@ -147,11 +144,30 @@ public class MainScreen extends FragmentActivity {
                 fragmentManager.popBackStack();
                 AddEventButton.setVisible(true);
             }
+
+            @Override
+            public void selectAddress() {
+                EventDetailsFragment detailsFragment = new EventDetailsFragment();
+                delegate = new EventDetailsFragment.EventDetailsFragmentDelegate() {
+                    @Override
+                    public void save() {
+                        fragmentManager.popBackStack();
+                        SaveLocationButton.setVisible(false);
+                    }
+                };
+                detailsFragment.setEventDetailsDelegate(delegate);
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.remove(addEventFragment);
+                transaction.add(R.id.fragment_container, detailsFragment, "EventDetailsFragment");
+                transaction.addToBackStack(null);
+                transaction.commit();
+                SaveLocationButton.setVisible(true);
+            }
         });
-        FragmentTransaction transaction=fragmentManager.beginTransaction();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.remove(fragmentManager.findFragmentByTag("ListOfEventsFragment"));
         transaction.add(R.id.fragment_container, addEventFragment, "AddEventFragment");
-        transaction.addToBackStack("null");
+        transaction.addToBackStack(null);
         transaction.commit();
         AddEventButton.setVisible(false);
     }
@@ -163,9 +179,16 @@ public class MainScreen extends FragmentActivity {
         else {
             Fragment fragment = fragmentManager.findFragmentByTag("AddEventFragment");
             if(fragment != null) {
-                if (fragmentManager.findFragmentByTag("AddEventFragment").isVisible())
-                {
+                if (fragment.isVisible()) {
                     AddEventButton.setVisible(true);
+                }
+            }
+            else {
+                fragment = fragmentManager.findFragmentByTag("EventDetailsFragment");
+                if(fragment != null) {
+                    if(fragment.isVisible()) {
+                        SaveLocationButton.setVisible(false);
+                    }
                 }
             }
         }

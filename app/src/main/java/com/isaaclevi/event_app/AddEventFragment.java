@@ -9,15 +9,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class AddEventFragment extends Fragment
 {
-
-    interface AddEventDelegate
-    {
+    interface AddEventDelegate {
         public void add();
+        public void selectAddress();
     }
 
     EditText EventName;
@@ -25,7 +21,6 @@ public class AddEventFragment extends Fragment
     TextView UserName;
     Button EventAddress;
     Button AddEvent;
-
     Button Date, Time;
 
     User currentUser;
@@ -93,14 +88,16 @@ public class AddEventFragment extends Fragment
         EventAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(delegate != null)
+                    delegate.selectAddress();
             }
         });
 
         AddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Save to DB
+                if(delegate != null)
+                    delegate.add();
             }
         });
 

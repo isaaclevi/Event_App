@@ -1,6 +1,5 @@
 package com.isaaclevi.event_app;
 
-
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -45,9 +44,11 @@ public class EventDetailsFragment extends Fragment {
         }
         View view = inflater.inflate(R.layout.fragment_event_details, container, false);
 
-        Double coordinates[] = parseCoordinates(event.EventAddress);
-        latitude = coordinates[0];
-        longitude = coordinates[1];
+        if(event != null) {
+            Double coordinates[] = parseCoordinates(event.EventAddress);
+            latitude = coordinates[0];
+            longitude = coordinates[1];
+        }
 
         setUpMapIfNeeded(); // For setting up the MapFragment
 
@@ -78,11 +79,13 @@ public class EventDetailsFragment extends Fragment {
     private void setUpMap() {
         // For showing a move to my location button
         mMap.setMyLocationEnabled(true);
-        // For dropping a marker at a point on the Map
-        mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(event.EventName).snippet("Event Address"));
-        // For zooming automatically to the Dropped PIN Location
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,
-                longitude), 12.0f));
+        if(event != null) {
+            // For dropping a marker at a point on the Map
+            mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(event.EventName).snippet("Event Address"));
+            // For zooming automatically to the Dropped PIN Location
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,
+                    longitude), 12.0f));
+        }
     }
 
     @Override
