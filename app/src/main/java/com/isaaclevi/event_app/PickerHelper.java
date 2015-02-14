@@ -4,14 +4,14 @@ package com.isaaclevi.event_app;
  * Created by Ariel Tzentner on 2/13/2015.
  */
 
-import android.widget.Button;
+import android.widget.TextView;
 
 public class PickerHelper {
 
     private static PickerHelper instance = new PickerHelper();
 
-    Button dateButton;
-    Button timeButton;
+    TextView dateView;
+    TextView timeView;
 
     public PickerHelper() {
     }
@@ -21,18 +21,18 @@ public class PickerHelper {
     }
 
     public void setDate(int year, int month, int day) {
-        dateButton.setText(day + "/" + (month + 1) + "/" + year);
+        dateView.setText(day + "/" + (month + 1) + "/" + year);
     }
 
     public void setTime(int hourOfDay, int minute) {
-        timeButton.setText(hourOfDay + ":" + minute);
+        timeView.setText(hourOfDay + ":" + minute);
     }
 
-    public void setDateButton(Button dateButton) {
-        this.dateButton = dateButton;
+    public void setDateView(TextView dateView) {
+        this.dateView = dateView;
     }
 
-    public void setTimeButton(Button timeButton) {
-        this.timeButton = timeButton;
+    public void setTimeView(TextView timeView) {
+        this.timeView = timeView;
     }
 }

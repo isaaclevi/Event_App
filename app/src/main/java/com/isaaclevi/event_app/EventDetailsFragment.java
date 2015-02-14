@@ -44,7 +44,7 @@ public class EventDetailsFragment extends Fragment {
         }
         View view = inflater.inflate(R.layout.fragment_event_details, container, false);
 
-        if(event != null) {
+        if(event.EventAddress != null) {
             Double coordinates[] = parseCoordinates(event.EventAddress);
             latitude = coordinates[0];
             longitude = coordinates[1];

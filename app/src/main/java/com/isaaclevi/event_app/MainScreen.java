@@ -143,10 +143,15 @@ public class MainScreen extends FragmentActivity {
             public void add() {
                 fragmentManager.popBackStack();
                 AddEventButton.setVisible(true);
+                Context context = getApplicationContext();
+                CharSequence text = "Event Saved!";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
 
             @Override
-            public void selectAddress() {
+            public void selectAddress(Event event) {
                 EventDetailsFragment detailsFragment = new EventDetailsFragment();
                 delegate = new EventDetailsFragment.EventDetailsFragmentDelegate() {
                     @Override
@@ -156,6 +161,7 @@ public class MainScreen extends FragmentActivity {
                     }
                 };
                 detailsFragment.setEventDetailsDelegate(delegate);
+                detailsFragment.setEvent(event);
                 FragmentTransaction transaction = fragmentManager.beginTransaction();
                 transaction.remove(addEventFragment);
                 transaction.add(R.id.fragment_container, detailsFragment, "EventDetailsFragment");

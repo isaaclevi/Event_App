@@ -6,20 +6,42 @@ package com.isaaclevi.event_app;
 
 public class Event
 {
-    String EventId;
     String EventName;
     String UserName;
     String EventExplanation;
-    String Time;
+    String EventTime;
     String EventAddress;
 
-    public Event(String eventId, String eventName, String userName, String eventExplanation, String time, String eventAddress)
+    public Event() {
+
+    }
+
+    public Event(String eventName, String userName, String eventExplanation, String eventTime, String eventAddress)
     {
-        EventId = eventId;
         EventName = eventName;
         UserName = userName;
         EventExplanation = eventExplanation;
-        Time = time;
+        EventTime = eventTime;
+        EventAddress = eventAddress;
+    }
+
+    public void setEventName(String eventName) {
+        EventName = eventName;
+    }
+
+    public void setUserName(String userName) {
+        UserName = userName;
+    }
+
+    public void setEventExplanation(String eventExplanation) {
+        EventExplanation = eventExplanation;
+    }
+
+    public void setEventTime(String eventTime) {
+        EventTime = eventTime;
+    }
+
+    public void setEventAddress(String eventAddress) {
         EventAddress = eventAddress;
     }
 }

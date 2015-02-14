@@ -39,11 +39,11 @@ public class Model
         try {
             List<ParseObject> parseObjects = query.find();
             for(ParseObject object: parseObjects){
-                Event event = new Event(object.getString("EventId"),
-                        object.getString("EventName"),
+                Event event = new Event(object.getString("EventName"),
                         object.getString("UserName"),
                         object.getString("EventExplanation"),
-                        object.getString("EventTime"));
+                        object.getString("EventTime"),
+                        object.getString("EventAddress"));
                 events.add(event);
             }
         } catch (ParseException e) {
@@ -116,5 +116,19 @@ public class Model
             e.printStackTrace();
         }
         return null;
+    }
+
+    public void saveEvent(Event event) {
+        ParseObject object = new ParseObject("Events");
+        object.put("EventName", event.EventName);
+        object.put("UserName", event.UserName);
+        object.put("EventExplanation", event.EventExplanation);
+        object.put("EventTime", event.EventTime);
+        object.put("EventAddress", event.EventAddress);
+        try {
+            object.save();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

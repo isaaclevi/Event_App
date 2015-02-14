@@ -13,17 +13,20 @@ public class AddEventFragment extends Fragment
 {
     interface AddEventDelegate {
         public void add();
-        public void selectAddress();
+        public void selectAddress(Event event);
     }
 
     EditText EventName;
     EditText EventExplanation;
     TextView UserName;
+    TextView AddressView;
+    TextView DateView, TimeView;
     Button EventAddress;
     Button AddEvent;
     Button Date, Time;
 
     User currentUser;
+    Event event;
 
     AddEventDelegate delegate;
 
@@ -56,15 +59,21 @@ public class AddEventFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
+        event = new Event();
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_add_event, container, false);
+
         UserName = (TextView)root.findViewById(R.id.add_user_name);
         EventName = (EditText) root.findViewById(R.id.add_event_name);
         EventExplanation = (EditText) root.findViewById(R.id.add_event_explanation);
         EventAddress = (Button) root.findViewById(R.id.add_event_address);
+        AddressView = (TextView) root.findViewById(R.id.add_event_address_view);
+        DateView = (TextView) root.findViewById(R.id.add_event_date_view);
+        TimeView = (TextView) root.findViewById(R.id.add_event_time_view);
         AddEvent = (Button) root.findViewById(R.id.add_event_button);
 
-        UserName.setText(currentUser.PersonName+"("+currentUser.NickName+")");
+        UserName.setText(currentUser.PersonName + "(" + currentUser.NickName + ")");
+        event.setUserName(currentUser.NickName);
 
         Date = (Button) root.findViewById(R.id.add_event_date);
         Time = (Button) root.findViewById(R.id.add_event_time);
@@ -73,7 +82,7 @@ public class AddEventFragment extends Fragment
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
-                PickerHelper.getInstance().setDateButton(Date);
+                PickerHelper.getInstance().setDateView(Date);
             }
         });
 
@@ -81,21 +90,26 @@ public class AddEventFragment extends Fragment
             @Override
             public void onClick(View v) {
                 showTimePickerDialog();
-                PickerHelper.getInstance().setTimeButton(Time);
+                PickerHelper.getInstance().setTimeView(Time);
             }
         });
 
         EventAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(delegate != null)
-                    delegate.selectAddress();
+                if(delegate != null) {
+                    delegate.selectAddress(event);
+                }
             }
         });
 
         AddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                event.setEventName(EventName.getText().toString());
+                event.setEventExplanation(EventExplanation.getText().toString());
+                event.setEventTime(DateView.getText().toString() + " " + TimeView.getText().toString());
+                Model.getInstance().saveEvent(event);
                 if(delegate != null)
                     delegate.add();
             }
