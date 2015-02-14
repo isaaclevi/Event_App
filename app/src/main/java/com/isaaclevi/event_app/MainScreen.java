@@ -10,8 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.MapFragment;
-
 
 public class MainScreen extends FragmentActivity {
 
@@ -33,8 +31,6 @@ public class MainScreen extends FragmentActivity {
         model.initializeModel(this);
 
         fragmentManager = getFragmentManager();
-        MapFragment mapFragment = new MapFragment();
-        fragmentManager.putFragment(savedInstanceState, "MapFragment", mapFragment);
 
         logInFragment = new LogInFragment();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

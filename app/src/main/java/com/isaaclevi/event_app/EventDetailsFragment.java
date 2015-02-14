@@ -1,6 +1,7 @@
 package com.isaaclevi.event_app;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,6 +50,11 @@ public class EventDetailsFragment extends Fragment {
             latitude = coordinates[0];
             longitude = coordinates[1];
         }
+
+        MapFragment mapFragment = new MapFragment();
+        FragmentTransaction transaction = MainScreen.fragmentManager.beginTransaction();
+        transaction.add(mapFragment, "MapFragment");
+        transaction.commit();
 
         setUpMapIfNeeded(); // For setting up the MapFragment
 
