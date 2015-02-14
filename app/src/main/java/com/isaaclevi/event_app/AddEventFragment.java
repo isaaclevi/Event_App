@@ -91,7 +91,7 @@ public class AddEventFragment extends Fragment
             public void onClick(View v) {
                 startOrEnd = true;
                 showTimePickerDialog();
-                PickerHelper.getInstance().setStartDateButton(StartTime);
+                PickerHelper.getInstance().setStartTimeButton(StartTime);
             }
         });
 
@@ -100,7 +100,7 @@ public class AddEventFragment extends Fragment
             public void onClick(View v) {
                 startOrEnd = false;
                 showDatePickerDialog();
-                PickerHelper.getInstance().setStartDateButton(EndDate);
+                PickerHelper.getInstance().setEndDateButton(EndDate);
             }
         });
 
@@ -109,7 +109,7 @@ public class AddEventFragment extends Fragment
             public void onClick(View v) {
                 startOrEnd = false;
                 showTimePickerDialog();
-                PickerHelper.getInstance().setStartDateButton(EndTime);
+                PickerHelper.getInstance().setEndTimeButton(EndTime);
             }
         });
 
