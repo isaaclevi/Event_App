@@ -42,79 +42,49 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
-            <LinearLayout
+
+            <Button
+                android:id="@+id/add_event_start_date"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/add_event_start_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="Start Date:"
-                    android:ems="10"
-                    android:layout_margin="15dp"/>
-                <TextView
-                    android:id="@+id/start_date_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
-            </LinearLayout>
-            <LinearLayout
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Start Date:"
+                android:ems="10"
+                android:layout_margin="15dp"/>
+
+            <Button
+                android:id="@+id/add_event_start_time"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/add_event_start_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="Start Time:"
-                    android:ems="10"
-                    android:layout_margin="15dp"/>
-                <TextView
-                    android:id="@+id/start_time_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Start Time:"
+                android:ems="10"
+                android:layout_margin="15dp"/>
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <LinearLayout
+
+            <Button
+                android:id="@+id/add_event_end_date"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/add_event_end_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="End Date"
-                    android:ems="10"
-                    android:layout_margin="15dp"/>
-                <TextView
-                    android:id="@+id/end_date_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
-            </LinearLayout>
-            <LinearLayout
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="End Date"
+                android:ems="10"
+                android:layout_margin="15dp"/>
+
+            <Button
+                android:id="@+id/add_event_end_time"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-                    android:id="@+id/add_event_end_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="End Time"
-                    android:ems="10"
-                    android:layout_margin="15dp"/>
-                <TextView
-                    android:id="@+id/end_time_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="End Time"
+                android:ems="10"
+                android:layout_margin="15dp"/>
+
         </LinearLayout>
 
         <Button

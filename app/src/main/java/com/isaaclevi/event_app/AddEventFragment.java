@@ -26,7 +26,7 @@ public class AddEventFragment extends Fragment
     TextView UserName;
     Button Sdate, Stime, Edate, Etime;
     User currentUser;
-    boolean startOrEnd;//flag to know if start button or end button preset
+    boolean startOrEnd; //flag to know if start button or end button preset
 
     AddEventDelegate delegate;
 
@@ -75,11 +75,6 @@ public class AddEventFragment extends Fragment
         Edate = (Button) root.findViewById(R.id.add_event_end_date);
         Etime = (Button) root.findViewById(R.id.add_event_end_time);
 
-        final TextView StartDateText = (TextView) root.findViewById(R.id.start_date_text);
-        final TextView StartTimeText = (TextView) root.findViewById(R.id.start_time_text);
-        final TextView EndDateText = (TextView) root.findViewById(R.id.end_date_text);
-        final TextView EndTimeText = (TextView) root.findViewById(R.id.end_time_text);
-
         Sdate.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -87,7 +82,7 @@ public class AddEventFragment extends Fragment
             {
                 startOrEnd = true;
                 showDatePickerDialog();
-                StartDateText.setText("Start Date:"+PickerHelper.getInstance().getStartDate());
+                Sdate.setText("Start Date:"+PickerHelper.getInstance().getStartDate());
             }
         });
 
@@ -98,7 +93,7 @@ public class AddEventFragment extends Fragment
             {
                 startOrEnd = true;
                 showTimePickerDialog();
-                StartTimeText.setText("Start Time:"+PickerHelper.getInstance().getStartTime());
+                Stime.setText("Start Time:"+PickerHelper.getInstance().getStartTime());
             }
         });
 
@@ -109,7 +104,7 @@ public class AddEventFragment extends Fragment
             {
                 startOrEnd = false;
                 showDatePickerDialog();
-                EndDateText.setText("End Date:"+PickerHelper.getInstance().getEndDate());
+                Edate.setText("End Date:"+PickerHelper.getInstance().getEndDate());
             }
         });
 
@@ -120,7 +115,7 @@ public class AddEventFragment extends Fragment
             {
                 startOrEnd = false;
                 showTimePickerDialog();
-                EndTimeText.setText("End Time:"+PickerHelper.getInstance().getEndTime());
+                Etime.setText("End Time:"+PickerHelper.getInstance().getEndTime());
             }
         });
 
