@@ -2,6 +2,7 @@ package com.isaaclevi.event_app;
 
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Vector;
 
@@ -87,11 +89,14 @@ public class ListOfEventsFragment extends Fragment
             EventExplanation.setText(event.EventExplanation);
             TextView TimeStarts = (TextView) convertView.findViewById(R.id.time_started);
             TimeStarts.setText(event.EventTime);
-            Button LocationButton = (Button) convertView.findViewById(R.id.view_location_button);
+            final Button LocationButton = (Button) convertView.findViewById(R.id.view_location_button);
             LocationButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(listOfEventsDelegate != null) {
+                    if(event.EventAddress != null && !event.EventAddress.equals("")) {
+                        LocationButton.setError("Error Fetching Address!");
+                    }
+                    else if(listOfEventsDelegate != null) {
                         listOfEventsDelegate.viewEventLocation(event);
                     }
                 }
