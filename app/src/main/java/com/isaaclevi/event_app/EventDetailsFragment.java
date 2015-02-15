@@ -23,6 +23,7 @@ public class EventDetailsFragment extends Fragment {
     MapView mapView;
     private GoogleMap googleMap;
     private Double latitude, longitude;
+    private MarkerOptions marker;
 
     Event event;
     EventDetailsFragmentDelegate delegate;
@@ -50,7 +51,7 @@ public class EventDetailsFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         // inflate and return the layout
         View v = inflater.inflate(R.layout.fragment_event_details, container, false);
         mapView = (MapView) v.findViewById(R.id.mapView);
@@ -64,32 +65,37 @@ public class EventDetailsFragment extends Fragment {
             e.printStackTrace();
         }
 
-        /*mapView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                return false;
-            }
-        });*/
-
         googleMap = mapView.getMap();
+        marker = new MarkerOptions();
 
         if(event.EventAddress != null && event.EventName != null) {
             Double coordinates[] = parseCoordinates(event.EventAddress);
             latitude = coordinates[0];
             longitude = coordinates[1];
             // create marker
-            MarkerOptions marker = new MarkerOptions().position(
-                    new LatLng(latitude, longitude)).title(event.EventName);
-
-            // adding marker
-            googleMap.addMarker(marker);
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(new LatLng(latitude, longitude)).zoom(12).build();
-            googleMap.animateCamera(CameraUpdateFactory
-                    .newCameraPosition(cameraPosition));
+            setMapLocation(new LatLng(latitude, longitude));
+            marker.title(event.EventName);
         }
-        // Perform any camera updates here
+
+        googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                setMapLocation(latLng);
+            }
+        });
+
         return v;
+    }
+
+    private void setMapLocation(LatLng latLng) {
+        // set marker position
+        marker.position(latLng);
+        // adding marker
+        googleMap.addMarker(marker);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(latLng).zoom(12).build();
+        googleMap.animateCamera(CameraUpdateFactory
+                .newCameraPosition(cameraPosition));
     }
 
     @Override
