@@ -104,8 +104,12 @@ public class ListOfEventsFragment extends Fragment
             final View finalConvertView = convertView;
             Button deleteButton = (Button) convertView.findViewById(R.id.delete_event);
             deleteButton.setVisibility(View.INVISIBLE);
-            if (user.NickName.equals(user)) {
+            Button editButton = (Button) convertView.findViewById(R.id.edit_event);
+            editButton.setVisibility(View.INVISIBLE);
+            if (user.NickName.equals(user))
+            {
                 deleteButton.setVisibility(View.VISIBLE);
+                editButton.setVisibility(View.VISIBLE);
             }
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -113,6 +117,32 @@ public class ListOfEventsFragment extends Fragment
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(finalConvertView.getContext());
                     builder.setMessage("Delete Current Event?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            Model.getInstance().deleteEvent(event);
+                                            adapter.updateList();
+                                        }
+                                    })
+                            .setNegativeButton("No",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            });
+
+            editButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(finalConvertView.getContext());
+                    builder.setMessage("Edit Current Event?")
                             .setCancelable(false)
                             .setPositiveButton("Yes",
                                     new DialogInterface.OnClickListener() {
