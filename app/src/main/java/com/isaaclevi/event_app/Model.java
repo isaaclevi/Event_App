@@ -125,10 +125,6 @@ public class Model
         object.put("EventExplanation", event.EventExplanation);
         object.put("EventTime", event.EventTime);
         object.put("EventAddress", event.EventAddress);
-        try {
-            object.save();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        object.saveInBackground();
     }
 }

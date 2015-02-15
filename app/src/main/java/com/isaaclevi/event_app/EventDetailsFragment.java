@@ -46,8 +46,11 @@ public class EventDetailsFragment extends Fragment implements OnMapReadyCallback
     }
 
     private LatLng parseCoordinates(String eventAddress) {
-        String result[] = eventAddress.split(",");
-        return new LatLng(Double.parseDouble(result[0]), Double.parseDouble(result[1]));
+        if(eventAddress != null) {
+            String result[] = eventAddress.split(",");
+            return new LatLng(Double.parseDouble(result[0]), Double.parseDouble(result[1]));
+        }
+        return null;
     }
 
     private void setMapLocation(LatLng latLng) {
