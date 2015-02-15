@@ -7,8 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 
 
@@ -33,7 +31,6 @@ public class LogInFragment extends Fragment
     EditText password;
     Button register;
     Button login;
-    CheckBox rememberMe;
 
     private LoginDelegate loginDelegate;
 
@@ -52,7 +49,6 @@ public class LogInFragment extends Fragment
         password = (EditText) root.findViewById(R.id.password);
         register = (Button) root.findViewById(R.id.register_btn);
         login = (Button) root.findViewById(R.id.log_in_btn);
-        rememberMe = (CheckBox) root.findViewById(R.id.remember_pass_box);
 
         password.setText("");
 
@@ -80,14 +76,6 @@ public class LogInFragment extends Fragment
                         }
                     }
                 }
-            }
-        });
-
-        //listener for remember box
-        rememberMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //do nothing at this point
             }
         });
 

@@ -82,7 +82,7 @@ public class AddEventFragment extends Fragment
             @Override
             public void onClick(View v) {
                 showDatePickerDialog();
-                PickerHelper.getInstance().setDateView(Date);
+                PickerHelper.getInstance().setDateView(DateView);
             }
         });
 
@@ -90,7 +90,7 @@ public class AddEventFragment extends Fragment
             @Override
             public void onClick(View v) {
                 showTimePickerDialog();
-                PickerHelper.getInstance().setTimeView(Time);
+                PickerHelper.getInstance().setTimeView(TimeView);
             }
         });
 
@@ -102,6 +102,9 @@ public class AddEventFragment extends Fragment
                 }
             }
         });
+
+        if(event.EventAddress != null)
+            AddressView.setText(event.EventAddress);
 
         AddEvent.setOnClickListener(new View.OnClickListener() {
             @Override

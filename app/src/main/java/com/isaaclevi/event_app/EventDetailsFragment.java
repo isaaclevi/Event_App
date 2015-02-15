@@ -41,13 +41,26 @@ public class EventDetailsFragment extends Fragment implements OnMapReadyCallback
         this.delegate = delegate;
     }
 
-    private Double[] parseCoordinates(String eventAddress) {
+    public void saveAddress(Event event) {
+        event.setEventAddress(latitude + "," + longitude);
+    }
+
+    private LatLng parseCoordinates(String eventAddress) {
         String result[] = eventAddress.split(",");
-        Double coordinates[] = new Double[2];
-        for(int i = 0; i <= 1; i++) {
-            coordinates[i] = Double.parseDouble(result[i]);
-        }
-        return coordinates;
+        return new LatLng(Double.parseDouble(result[0]), Double.parseDouble(result[1]));
+    }
+
+    private void setMapLocation(LatLng latLng) {
+        // set marker position
+        marker.position(latLng);
+        // adding marker
+        googleMap.addMarker(marker);
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(latLng).zoom(12).build();
+        googleMap.animateCamera(CameraUpdateFactory
+                .newCameraPosition(cameraPosition));
+        latitude = latLng.latitude;
+        longitude = latLng.longitude;
     }
 
     @Override
@@ -56,11 +69,8 @@ public class EventDetailsFragment extends Fragment implements OnMapReadyCallback
         marker = new MarkerOptions();
 
         if(event.EventAddress != null && event.EventName != null) {
-            Double coordinates[] = parseCoordinates(event.EventAddress);
-            latitude = coordinates[0];
-            longitude = coordinates[1];
             // create marker
-            setMapLocation(new LatLng(latitude, longitude));
+            setMapLocation(parseCoordinates(event.EventAddress));
             marker.title(event.EventName);
         }
 
@@ -91,17 +101,6 @@ public class EventDetailsFragment extends Fragment implements OnMapReadyCallback
         mapView.getMapAsync(this);
 
         return v;
-    }
-
-    private void setMapLocation(LatLng latLng) {
-        // set marker position
-        marker.position(latLng);
-        // adding marker
-        googleMap.addMarker(marker);
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(latLng).zoom(12).build();
-        googleMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
     }
 
     @Override

@@ -146,11 +146,12 @@ public class MainScreen extends Activity {
             }
 
             @Override
-            public void selectAddress(Event event) {
-                EventDetailsFragment detailsFragment = new EventDetailsFragment();
+            public void selectAddress(final Event event) {
+                final EventDetailsFragment detailsFragment = new EventDetailsFragment();
                 delegate = new EventDetailsFragment.EventDetailsFragmentDelegate() {
                     @Override
                     public void save() {
+                        detailsFragment.saveAddress(event);
                         getFragmentManager().popBackStack();
                         SaveLocationButton.setVisible(false);
                     }
