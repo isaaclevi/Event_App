@@ -1,19 +1,16 @@
 package com.isaaclevi.event_app;
 
+import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 
-public class MainScreen extends FragmentActivity {
-
-    public static FragmentManager fragmentManager;
+public class MainScreen extends Activity {
 
     Model model;
     LogInFragment logInFragment;
@@ -30,10 +27,8 @@ public class MainScreen extends FragmentActivity {
         model = Model.getInstance();
         model.initializeModel(this);
 
-        fragmentManager = getFragmentManager();
-
         logInFragment = new LogInFragment();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, logInFragment, "LogInFragment");
         transaction.addToBackStack(null);
         transaction.commit();
@@ -75,7 +70,7 @@ public class MainScreen extends FragmentActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void saveLocation() {
+    public void saveLocation() {
         if(delegate != null)
             delegate.save();
     }
@@ -85,7 +80,7 @@ public class MainScreen extends FragmentActivity {
             @Override
             public void regClick() {
                 RegisterFragment registerFragment = new RegisterFragment();
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.remove(logInFragment);
                 transaction.add(R.id.fragment_container, registerFragment, "RegisterFragment");
                 transaction.addToBackStack(null);
@@ -94,7 +89,7 @@ public class MainScreen extends FragmentActivity {
                 registerFragment.setRegisterDelegate(new RegisterFragment.RegisterDelegate() {
                     @Override
                     public void register() {
-                        fragmentManager.popBackStack();
+                        getFragmentManager().popBackStack();
                         Context context = getApplicationContext();
                         CharSequence text = "Register Complete.";
                         int duration = Toast.LENGTH_SHORT;
@@ -112,7 +107,7 @@ public class MainScreen extends FragmentActivity {
                     public void viewEventLocation(Event event) {
                         EventDetailsFragment detailsFragment = new EventDetailsFragment();
                         detailsFragment.setEvent(event);
-                        FragmentTransaction transaction = fragmentManager.beginTransaction();
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
                         transaction.remove(eventsFragment);
                         transaction.add(R.id.fragment_container, detailsFragment, "EventDetailsFragment");
                         transaction.addToBackStack(null);
@@ -120,7 +115,7 @@ public class MainScreen extends FragmentActivity {
                         AddEventButton.setVisible(false);
                     }
                 });
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.remove(logInFragment);
                 transaction.add(R.id.fragment_container, eventsFragment, "ListOfEventsFragment");
                 transaction.addToBackStack(null);
@@ -135,13 +130,13 @@ public class MainScreen extends FragmentActivity {
         });
     }
 
-    private void openAddEvent() {
+    public void openAddEvent() {
         final AddEventFragment addEventFragment = new AddEventFragment();
         addEventFragment.SetCurrentUser(currentUser);
         addEventFragment.setDelegate(new AddEventFragment.AddEventDelegate() {
             @Override
             public void add() {
-                fragmentManager.popBackStack();
+                getFragmentManager().popBackStack();
                 AddEventButton.setVisible(true);
                 Context context = getApplicationContext();
                 CharSequence text = "Event Saved!";
@@ -156,13 +151,13 @@ public class MainScreen extends FragmentActivity {
                 delegate = new EventDetailsFragment.EventDetailsFragmentDelegate() {
                     @Override
                     public void save() {
-                        fragmentManager.popBackStack();
+                        getFragmentManager().popBackStack();
                         SaveLocationButton.setVisible(false);
                     }
                 };
                 detailsFragment.setEventDetailsDelegate(delegate);
                 detailsFragment.setEvent(event);
-                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.remove(addEventFragment);
                 transaction.add(R.id.fragment_container, detailsFragment, "EventDetailsFragment");
                 transaction.addToBackStack(null);
@@ -170,8 +165,8 @@ public class MainScreen extends FragmentActivity {
                 SaveLocationButton.setVisible(true);
             }
         });
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.remove(fragmentManager.findFragmentByTag("ListOfEventsFragment"));
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.remove(getFragmentManager().findFragmentByTag("ListOfEventsFragment"));
         transaction.add(R.id.fragment_container, addEventFragment, "AddEventFragment");
         transaction.addToBackStack(null);
         transaction.commit();
@@ -180,17 +175,21 @@ public class MainScreen extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        if(fragmentManager.getBackStackEntryCount() == 1)
-            this.finish();
+        Fragment fragment = getFragmentManager().findFragmentByTag("LogInFragment");
+        if(fragment != null) {
+            if (fragment.isVisible()) {
+                this.finish();
+            }
+        }
         else {
-            Fragment fragment = fragmentManager.findFragmentByTag("AddEventFragment");
+            fragment = getFragmentManager().findFragmentByTag("AddEventFragment");
             if(fragment != null) {
                 if (fragment.isVisible()) {
                     AddEventButton.setVisible(true);
                 }
             }
             else {
-                fragment = fragmentManager.findFragmentByTag("EventDetailsFragment");
+                fragment = getFragmentManager().findFragmentByTag("EventDetailsFragment");
                 if(fragment != null) {
                     if(fragment.isVisible()) {
                         SaveLocationButton.setVisible(false);

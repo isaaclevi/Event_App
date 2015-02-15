@@ -1,7 +1,6 @@
 package com.isaaclevi.event_app;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,9 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -19,7 +20,8 @@ public class EventDetailsFragment extends Fragment {
         public void save();
     }
 
-    private GoogleMap mMap;
+    MapView mapView;
+    private GoogleMap googleMap;
     private Double latitude, longitude;
 
     Event event;
@@ -37,30 +39,6 @@ public class EventDetailsFragment extends Fragment {
         this.delegate = delegate;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        if (container == null) {
-            return null;
-        }
-        View view = inflater.inflate(R.layout.fragment_event_details, container, false);
-
-        if(event.EventAddress != null) {
-            Double coordinates[] = parseCoordinates(event.EventAddress);
-            latitude = coordinates[0];
-            longitude = coordinates[1];
-        }
-
-        MapFragment mapFragment = new MapFragment();
-        FragmentTransaction transaction = MainScreen.fragmentManager.beginTransaction();
-        transaction.add(mapFragment, "MapFragment");
-        transaction.commit();
-
-        setUpMapIfNeeded(); // For setting up the MapFragment
-
-        return view;
-    }
-
     private Double[] parseCoordinates(String eventAddress) {
         String result[] = eventAddress.split(",");
         Double coordinates[] = new Double[2];
@@ -70,51 +48,71 @@ public class EventDetailsFragment extends Fragment {
         return coordinates;
     }
 
-    public void setUpMapIfNeeded() {
-        // Do a null check to confirm that we have not already instantiated the map.
-        if (mMap == null) {
-            // Try to obtain the map from the SupportMapFragment.
-            MapFragment mapFragment = (MapFragment) MainScreen.fragmentManager.findFragmentById(R.id.location_map);
-            mMap = mapFragment.getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null)
-                setUpMap();
-        }
-    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        // inflate and return the layout
+        View v = inflater.inflate(R.layout.fragment_event_details, container, false);
+        mapView = (MapView) v.findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
 
-    private void setUpMap() {
-        // For showing a move to my location button
-        mMap.setMyLocationEnabled(true);
-        if(event != null) {
-            // For dropping a marker at a point on the Map
-            mMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude)).title(event.EventName).snippet("Event Address"));
-            // For zooming automatically to the Dropped PIN Location
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,
-                    longitude), 12.0f));
+        mapView.onResume();// needed to get the map to display immediately
+
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        /*mapView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return false;
+            }
+        });*/
+
+        googleMap = mapView.getMap();
+
+        if(event.EventAddress != null && event.EventName != null) {
+            Double coordinates[] = parseCoordinates(event.EventAddress);
+            latitude = coordinates[0];
+            longitude = coordinates[1];
+            // create marker
+            MarkerOptions marker = new MarkerOptions().position(
+                    new LatLng(latitude, longitude)).title(event.EventName);
+
+            // adding marker
+            googleMap.addMarker(marker);
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(latitude, longitude)).zoom(12).build();
+            googleMap.animateCamera(CameraUpdateFactory
+                    .newCameraPosition(cameraPosition));
+        }
+        // Perform any camera updates here
+        return v;
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        if (mMap != null)
-            setUpMap();
-        else {
-            // Try to obtain the map from the MapFragment.
-            mMap = ((MapFragment) MainScreen.fragmentManager
-                    .findFragmentById(R.id.location_map)).getMap();
-            // Check if we were successful in obtaining the map.
-            if (mMap != null)
-                setUpMap();
-        }
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (mMap != null) {
-            MainScreen.fragmentManager.beginTransaction()
-                    .remove(MainScreen.fragmentManager.findFragmentById(R.id.location_map)).commit();
-            mMap = null;
-        }
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
     }
 }
