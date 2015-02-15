@@ -56,6 +56,31 @@ public class AddEventFragment extends Fragment
         fragment.show(getFragmentManager(), "datePicker");
     }
 
+    private void setEmptyError(EditText text)
+    {
+        if(text.getText().toString().isEmpty())
+        {
+            text.setError("This Field Cannot Be Empty!");
+        }
+    }
+
+    private void setEmptyError(TextView text)
+    {
+        if(text.getText().toString().isEmpty())
+        {
+            text.setError("This Field Cannot Be Empty!");
+        }
+    }
+
+    private void ParsStringDateOrTime(String DateOrTime)
+    {
+            if(DateOrTime.split(":").length==2)
+            {
+                //DateOrTime.
+            }
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
     {
@@ -109,6 +134,11 @@ public class AddEventFragment extends Fragment
         AddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setEmptyError(EventName);
+                setEmptyError(AddressView);
+                int Day,Month,Year,Hours,Minuets;
+
+                //if()
                 event.setEventName(EventName.getText().toString());
                 event.setEventExplanation(EventExplanation.getText().toString());
                 event.setEventAddress(AddressView.getText().toString());
