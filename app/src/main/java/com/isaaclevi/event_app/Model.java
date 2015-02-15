@@ -129,8 +129,14 @@ public class Model
     }
 
     public void deleteEvent(Event event) {
+<<<<<<< HEAD
         ParseQuery<ParseObject> query = new ParseQuery("Events");
         query.whereEqualTo("EventName", event.EventName);
+=======
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Events");
+        query.whereEqualTo("EventName", event.EventName)
+                .whereEqualTo("UserName", event.UserName);
+>>>>>>> origin/master
         try {
             ParseObject object = query.getFirst();
             object.delete();

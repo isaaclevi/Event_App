@@ -52,8 +52,7 @@ public class MainScreen extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        switch (id)
-        {
+        switch (id) {
             case R.id.save_event_location:
                 saveLocation();
                 break;
