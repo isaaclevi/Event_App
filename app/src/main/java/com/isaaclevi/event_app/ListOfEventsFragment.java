@@ -21,6 +21,7 @@ import java.util.Vector;
  */
 public class ListOfEventsFragment extends Fragment
 {
+
     interface ListOfEventsDelegate {
         void viewEventLocation(Event event);
     }
@@ -32,6 +33,12 @@ public class ListOfEventsFragment extends Fragment
     }
 
     Adapter adapter;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    User user;
 
     public ListOfEventsFragment() {
         // Required empty public constructor
@@ -93,8 +100,13 @@ public class ListOfEventsFragment extends Fragment
             TextView TimeStarts = (TextView) convertView.findViewById(R.id.time_started);
             TimeStarts.setText(event.EventTime);
 
+
             final View finalConvertView = convertView;
             Button deleteButton = (Button) convertView.findViewById(R.id.delete_event);
+            deleteButton.setVisibility(View.INVISIBLE);
+            if (user.NickName.equals(user)) {
+                deleteButton.setVisibility(View.VISIBLE);
+            }
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
