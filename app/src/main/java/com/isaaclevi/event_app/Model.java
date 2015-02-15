@@ -127,17 +127,11 @@ public class Model
         object.put("EventAddress", event.EventAddress);
         object.saveInBackground();
     }
-<<<<<<< HEAD
 
     public void deleteEvent(Event event) {
-<<<<<<< HEAD
-        ParseQuery<ParseObject> query = new ParseQuery("Events");
-        query.whereEqualTo("EventName", event.EventName);
-=======
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Events");
         query.whereEqualTo("EventName", event.EventName)
                 .whereEqualTo("UserName", event.UserName);
->>>>>>> origin/master
         try {
             ParseObject object = query.getFirst();
             object.delete();
@@ -145,6 +139,4 @@ public class Model
             e.printStackTrace();
         }
     }
-=======
->>>>>>> parent of 8cd30a4... delete event
 }
