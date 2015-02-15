@@ -96,6 +96,36 @@ public class AddEventFragment extends Fragment
         return Num;
     }*/
 
+    private boolean Validation()
+    {
+        int Day, Month, Year, Hours, Minuets;
+        int[] Array;
+        Array = ParsStringDateOrTime(DateView.getText().toString() + " " + TimeView.getText().toString());
+        Day = Array[0];
+        Month = Array[1];
+        Year = Array[2];
+        Hours = Array[3];
+        Minuets = Array[4];
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH) + 1;
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int hours = c.get(Calendar.HOUR_OF_DAY);
+        int minuets = c.get(Calendar.MINUTE);
+
+        if (Year < year || (Year == year && Month < month) || (Year == year && Month == month && Day < day))
+        {
+            DateView.setError("Date Chosen is smaller then current date");
+            return false;
+        }
+
+        if ((Year == year && Month == month && Day == day) && (Hours < hours || (Hours == hours && Minuets < minuets)))
+        {
+                TimeView.setError("Time Chosen is smaller then current time");
+                return false;
+        }
+        return true;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState)
@@ -153,43 +183,15 @@ public class AddEventFragment extends Fragment
             {
                 setEmptyError(EventName);
                 setEmptyError(AddressView);
-                int Day,Month,Year,Hours,Minuets;
-                int[] Array;
-                Array=ParsStringDateOrTime(DateView.getText().toString()+" "+TimeView.getText().toString());
-                Day=Array[0];
-                Month=Array[1];
-                Year=Array[2];
-                Hours=Array[3];
-                Minuets=Array[4];
-                final Calendar c = Calendar.getInstance();
-                int year = c.get(Calendar.YEAR);
-                int month = c.get(Calendar.MONTH);
-                int day = c.get(Calendar.DAY_OF_MONTH);
-                int hours = c.get(Calendar.HOUR_OF_DAY);
-                int minuets = c.get(Calendar.MINUTE);
-
-                if(Year<year || (Year==year && Month<month) || (Year==year && Month==month && Day<day))
+                if(Validation() && EventName.getText().toString().isEmpty() && AddressView.getText().toString().isEmpty())
                 {
-                    DateView.setError("Date Chosen is smaller then current date");
-                }
-
-                else
-                {
-                    if ((Year == year && Month == month && Day == day) && (Hours < hours || (Hours == hours && Minuets < minuets)))
-                    {
-                        TimeView.setError("Time Chosen is smaller then current time");
-                    }
-
-                    else
-                    {
-                        event.setEventName(EventName.getText().toString());
-                        event.setEventExplanation(EventExplanation.getText().toString());
-                        event.setEventAddress(AddressView.getText().toString());
-                        event.setEventTime(DateView.getText().toString() + " " + TimeView.getText().toString());
-                        Model.getInstance().saveEvent(event);
-                        if (delegate != null)
-                            delegate.add();
-                    }
+                    event.setEventName(EventName.getText().toString());
+                    event.setEventExplanation(EventExplanation.getText().toString());
+                    event.setEventAddress(AddressView.getText().toString());
+                    event.setEventTime(DateView.getText().toString() + " " + TimeView.getText().toString());
+                    Model.getInstance().saveEvent(event);
+                    if (delegate != null)
+                        delegate.add();
                 }
             }
         });
