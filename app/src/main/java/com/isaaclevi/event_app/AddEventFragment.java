@@ -183,7 +183,7 @@ public class AddEventFragment extends Fragment
             {
                 setEmptyError(EventName);
                 setEmptyError(AddressView);
-                if(Validation() && EventName.getText().toString().isEmpty() && AddressView.getText().toString().isEmpty())
+                if(Validation() && EventName.getText().toString().isEmpty() /*&& AddressView.getText().toString().isEmpty()*/)
                 {
                     event.setEventName(EventName.getText().toString());
                     event.setEventExplanation(EventExplanation.getText().toString());
