@@ -48,12 +48,14 @@ public class AddEventFragment extends Fragment
     {
         TimePickerFragment fragment = new TimePickerFragment();
         fragment.show(getFragmentManager(), "timePicker");
+        fragment.setPreviousTime(TimeView.getText().toString());
     }
 
     public void showDatePickerDialog()
     {
         DatePickerFragment fragment = new DatePickerFragment();
         fragment.show(getFragmentManager(), "datePicker");
+        fragment.setPreviousDate(DateView.getText().toString());
     }
 
     private void setEmptyError(EditText text)
