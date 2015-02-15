@@ -2,6 +2,7 @@ package com.isaaclevi.event_app;
 
 import android.content.Context;
 
+import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -39,7 +40,8 @@ public class Model
         try {
             List<ParseObject> parseObjects = query.find();
             for(ParseObject object: parseObjects){
-                Event event = new Event(object.getString("EventName"),
+                Event event = new Event(object.getString("objectId"),
+                        object.getString("EventName"),
                         object.getString("UserName"),
                         object.getString("EventExplanation"),
                         object.getString("EventTime"),
@@ -138,5 +140,23 @@ public class Model
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public void UpdateEvent(String ObjectId)
+    {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Events");
+
+        // Retrieve the object by id
+        query.getInBackground(ObjectId, new GetCallback<ParseObject>() {
+            public void done(ParseObject gameScore, ParseException e) {
+                if (e == null) {
+                    // Now let's update it with some new data. In this case, only cheatMode and score
+                    // will get sent to the Parse Cloud. playerName hasn't changed.
+                    gameScore.put("score", 1338);
+                    gameScore.put("cheatMode", true);
+                    gameScore.saveInBackground();
+                }
+            }
+        });
     }
 }

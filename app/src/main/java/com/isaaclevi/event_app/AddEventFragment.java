@@ -71,7 +71,7 @@ public class AddEventFragment extends Fragment
     private int[] ParsStringDateOrTime(String DateOrTime)
     {
         int[] Num=new int[5];
-        String[] Str,s1,s2;
+        String[] Str;
         Str=DateOrTime.split("[/ :]");
         for(int i=0;i<5;i++)
         {
@@ -79,22 +79,6 @@ public class AddEventFragment extends Fragment
         }
         return Num;
     }
-
-    /*
-    private int[] ParsStringDateOrTime(String DateOrTime)
-    {
-        int[] Num=new int[5];
-        String[] Str,s1,s2;
-        Str=DateOrTime.split(" ");
-        s1=Str[0].split("/");
-        s2=Str[1].split(":");
-        Num[0]=Integer.parseInt(s1[0]);
-        Num[1]=Integer.parseInt(s1[1]);
-        Num[2]=Integer.parseInt(s1[2]);
-        Num[3]=Integer.parseInt(s1[3]);
-        Num[4]=Integer.parseInt(s1[4]);
-        return Num;
-    }*/
 
     private boolean Validation()
     {
