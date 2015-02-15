@@ -1,7 +1,6 @@
 package com.isaaclevi.event_app;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
@@ -185,17 +184,22 @@ public class MainScreen extends Activity {
             this.finish();
         }
         else {
-            Fragment fragment = getFragmentManager().findFragmentByTag("ListOfEventsFragment");
-            if(fragment != null) {
-                if (fragment.isVisible()) {
+            if(getFragmentManager().findFragmentByTag("ListOfEventsFragment") != null) {
+                if (getFragmentManager().findFragmentByTag("ListOfEventsFragment").isVisible()) {
                     AddEventButton.setVisible(false);
                 }
             }
             else {
-                fragment = getFragmentManager().findFragmentByTag("EventDetailsFragment");
-                if(fragment != null) {
-                    if(fragment.isVisible()) {
+                if(getFragmentManager().findFragmentByTag("EventDetailsFragment") != null) {
+                    if(getFragmentManager().findFragmentByTag("EventDetailsFragment").isVisible()) {
                         SaveLocationButton.setVisible(false);
+                    }
+                }
+                else {
+                    if(getFragmentManager().findFragmentByTag("AddEventFragment") != null) {
+                        if (getFragmentManager().findFragmentByTag("AddEventFragment").isVisible()) {
+                            AddEventButton.setVisible(true);
+                        }
                     }
                 }
             }
