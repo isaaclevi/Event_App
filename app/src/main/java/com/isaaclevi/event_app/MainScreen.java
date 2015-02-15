@@ -121,6 +121,11 @@ public class MainScreen extends Activity {
                 transaction.addToBackStack(null);
                 transaction.commit();
                 AddEventButton.setVisible(true);
+                Context context = getApplicationContext();
+                CharSequence text = "Login Successful.";
+                int duration = Toast.LENGTH_SHORT;
+                Toast toast = Toast.makeText(context, text, duration);
+                toast.show();
             }
 
             @Override
@@ -139,7 +144,7 @@ public class MainScreen extends Activity {
                 getFragmentManager().popBackStack();
                 AddEventButton.setVisible(true);
                 Context context = getApplicationContext();
-                CharSequence text = "Event Saved!";
+                CharSequence text = "Event Saved.";
                 int duration = Toast.LENGTH_SHORT;
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
