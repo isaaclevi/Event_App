@@ -60,14 +60,6 @@ public class AddEventFragment extends Fragment
         fragment.setPreviousDate(DateView.getText().toString());
     }
 
-    private void setEmptyError(EditText text)
-    {
-        if(text.getText().toString().isEmpty())
-        {
-            text.setError("This Field Cannot Be Empty!");
-        }
-    }
-
     private void setEmptyError(TextView text)
     {
         if(text.getText().toString().isEmpty())
@@ -78,31 +70,31 @@ public class AddEventFragment extends Fragment
 
     private int[] ParsStringDateOrTime(String DateOrTime)
     {
-        int[] Num;
-        String[] Str;
-        if(DateOrTime.split(":").length==2)
+        int[] Num=new int[5];
+        String[] Str,s1,s2;
+        Str=DateOrTime.split("[/ :]");
+        for(int i=0;i<5;i++)
         {
-            Str=DateOrTime.split(":");
-            Num=new int[2];
-            for(int i=0;i<Str.length;i++)
-            {
-                Num[i] = Integer.parseInt(Str[i]);
-            }
-            return Num;
+            Num[i]=Integer.parseInt(Str[i]);
         }
-
-        if(DateOrTime.split("/").length==3)
-        {
-            Str=DateOrTime.split("/");
-            Num=new int[3];
-            for(int i=0;i<Str.length;i++)
-            {
-                Num[i] = Integer.parseInt(Str[i]);
-            }
-            return Num;
-        }
-        return null;
+        return Num;
     }
+
+    /*
+    private int[] ParsStringDateOrTime(String DateOrTime)
+    {
+        int[] Num=new int[5];
+        String[] Str,s1,s2;
+        Str=DateOrTime.split(" ");
+        s1=Str[0].split("/");
+        s2=Str[1].split(":");
+        Num[0]=Integer.parseInt(s1[0]);
+        Num[1]=Integer.parseInt(s1[1]);
+        Num[2]=Integer.parseInt(s1[2]);
+        Num[3]=Integer.parseInt(s1[3]);
+        Num[4]=Integer.parseInt(s1[4]);
+        return Num;
+    }*/
 
 
     @Override
@@ -157,18 +149,18 @@ public class AddEventFragment extends Fragment
 
         AddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
                 setEmptyError(EventName);
                 setEmptyError(AddressView);
                 int Day,Month,Year,Hours,Minuets;
                 int[] Array;
-                Array=ParsStringDateOrTime(DateView.getText().toString());
+                Array=ParsStringDateOrTime(DateView.getText().toString()+" "+TimeView.getText().toString());
                 Day=Array[0];
                 Month=Array[1];
                 Year=Array[2];
-                Array=ParsStringDateOrTime(TimeView.getText().toString());
-                Hours=Array[0];
-                Minuets=Array[1];
+                Hours=Array[3];
+                Minuets=Array[4];
                 final Calendar c = Calendar.getInstance();
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
@@ -180,7 +172,7 @@ public class AddEventFragment extends Fragment
                 {
                     DateView.setError("Date Chosen is smaller then current date");
                 }
-                
+
                 else
                 {
                     if ((Year == year && Month == month && Day == day) && (Hours < hours || (Hours == hours && Minuets < minuets)))
