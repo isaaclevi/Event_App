@@ -1,8 +1,9 @@
 package com.isaaclevi.event_app;
 
 
+import android.app.AlertDialog;
 import android.app.Fragment;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Vector;
 
@@ -83,12 +83,43 @@ public class ListOfEventsFragment extends Fragment
 
             TextView EventName = (TextView) convertView.findViewById(R.id.event_name);
             EventName.setText(event.EventName);
+
             TextView UserName = (TextView) convertView.findViewById(R.id.user_name);
             UserName.setText(event.UserName);
+
             TextView EventExplanation = (TextView) convertView.findViewById(R.id.event_explanation);
             EventExplanation.setText(event.EventExplanation);
+
             TextView TimeStarts = (TextView) convertView.findViewById(R.id.time_started);
             TimeStarts.setText(event.EventTime);
+
+            final View finalConvertView = convertView;
+            Button deleteButton = (Button) convertView.findViewById(R.id.edit_event);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(finalConvertView.getContext());
+                    builder.setMessage("Delete Current Event?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            Model.getInstance().deleteEvent(event);
+                                            adapter.updateList();
+                                        }
+                                    })
+                            .setNegativeButton("No",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            });
+
             final Button LocationButton = (Button) convertView.findViewById(R.id.view_location_button);
             LocationButton.setOnClickListener(new View.OnClickListener() {
                 @Override

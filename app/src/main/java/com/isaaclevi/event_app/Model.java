@@ -127,4 +127,16 @@ public class Model
         object.put("EventAddress", event.EventAddress);
         object.saveInBackground();
     }
+
+    public void deleteEvent(Event event) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Events");
+        query.whereEqualTo("EventName", event.EventName)
+                .whereEqualTo("UserName", event.UserName);
+        try {
+            ParseObject object = query.getFirst();
+            object.delete();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
 }
