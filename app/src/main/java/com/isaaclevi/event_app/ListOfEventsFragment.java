@@ -94,7 +94,7 @@ public class ListOfEventsFragment extends Fragment
             TimeStarts.setText(event.EventTime);
 
             final View finalConvertView = convertView;
-            Button deleteButton = (Button) convertView.findViewById(R.id.edit_event);
+            Button deleteButton = (Button) convertView.findViewById(R.id.delete_event);
             deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
