@@ -10,11 +10,12 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class EventDetailsFragment extends Fragment {
+public class EventDetailsFragment extends Fragment implements OnMapReadyCallback {
 
     public interface EventDetailsFragmentDelegate {
         public void save();
@@ -50,22 +51,8 @@ public class EventDetailsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // inflate and return the layout
-        View v = inflater.inflate(R.layout.fragment_event_details, container, false);
-        mapView = (MapView) v.findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
-
-        mapView.onResume();// needed to get the map to display immediately
-
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        googleMap = mapView.getMap();
+    public void onMapReady(GoogleMap googleMap) {
+        this.googleMap = googleMap;
         marker = new MarkerOptions();
 
         if(event.EventAddress != null && event.EventName != null) {
@@ -83,6 +70,25 @@ public class EventDetailsFragment extends Fragment {
                 setMapLocation(latLng);
             }
         });
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // inflate and return the layout
+        View v = inflater.inflate(R.layout.fragment_event_details, container, false);
+        mapView = (MapView) v.findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+
+        mapView.onResume();// needed to get the map to display immediately
+
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mapView.getMapAsync(this);
 
         return v;
     }

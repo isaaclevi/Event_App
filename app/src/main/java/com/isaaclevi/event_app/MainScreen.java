@@ -175,17 +175,14 @@ public class MainScreen extends Activity {
 
     @Override
     public void onBackPressed() {
-        Fragment fragment = getFragmentManager().findFragmentByTag("LogInFragment");
-        if(fragment != null) {
-            if (fragment.isVisible()) {
-                this.finish();
-            }
+        if (getFragmentManager().getBackStackEntryCount() == 1) {
+            this.finish();
         }
         else {
-            fragment = getFragmentManager().findFragmentByTag("AddEventFragment");
+            Fragment fragment = getFragmentManager().findFragmentByTag("ListOfEventsFragment");
             if(fragment != null) {
                 if (fragment.isVisible()) {
-                    AddEventButton.setVisible(true);
+                    AddEventButton.setVisible(false);
                 }
             }
             else {
