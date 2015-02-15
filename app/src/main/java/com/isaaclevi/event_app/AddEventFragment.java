@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 public class AddEventFragment extends Fragment
 {
     interface AddEventDelegate {
@@ -74,12 +76,32 @@ public class AddEventFragment extends Fragment
         }
     }
 
-    private void ParsStringDateOrTime(String DateOrTime)
+    private int[] ParsStringDateOrTime(String DateOrTime)
     {
-            if(DateOrTime.split(":").length==2)
+        int[] Num;
+        String[] Str;
+        if(DateOrTime.split(":").length==2)
+        {
+            Str=DateOrTime.split(":");
+            Num=new int[2];
+            for(int i=0;i<Str.length;i++)
             {
-                //DateOrTime.
+                Num[i] = Integer.parseInt(Str[i]);
             }
+            return Num;
+        }
+
+        if(DateOrTime.split("/").length==3)
+        {
+            Str=DateOrTime.split("/");
+            Num=new int[3];
+            for(int i=0;i<Str.length;i++)
+            {
+                Num[i] = Integer.parseInt(Str[i]);
+            }
+            return Num;
+        }
+        return null;
     }
 
 
@@ -139,15 +161,44 @@ public class AddEventFragment extends Fragment
                 setEmptyError(EventName);
                 setEmptyError(AddressView);
                 int Day,Month,Year,Hours,Minuets;
+                int[] Array;
+                Array=ParsStringDateOrTime(DateView.getText().toString());
+                Day=Array[0];
+                Month=Array[1];
+                Year=Array[2];
+                Array=ParsStringDateOrTime(TimeView.getText().toString());
+                Hours=Array[0];
+                Minuets=Array[1];
+                final Calendar c = Calendar.getInstance();
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+                int hours = c.get(Calendar.HOUR_OF_DAY);
+                int minuets = c.get(Calendar.MINUTE);
 
-                //if()
-                event.setEventName(EventName.getText().toString());
-                event.setEventExplanation(EventExplanation.getText().toString());
-                event.setEventAddress(AddressView.getText().toString());
-                event.setEventTime(DateView.getText().toString() + " " + TimeView.getText().toString());
-                Model.getInstance().saveEvent(event);
-                if(delegate != null)
-                    delegate.add();
+                if(Year<year || (Year==year && Month<month) || (Year==year && Month==month && Day<day))
+                {
+                    DateView.setError("Date Chosen is smaller then current date");
+                }
+                
+                else
+                {
+                    if ((Year == year && Month == month && Day == day) && (Hours < hours || (Hours == hours && Minuets < minuets)))
+                    {
+                        TimeView.setError("Time Chosen is smaller then current time");
+                    }
+
+                    else
+                    {
+                        event.setEventName(EventName.getText().toString());
+                        event.setEventExplanation(EventExplanation.getText().toString());
+                        event.setEventAddress(AddressView.getText().toString());
+                        event.setEventTime(DateView.getText().toString() + " " + TimeView.getText().toString());
+                        Model.getInstance().saveEvent(event);
+                        if (delegate != null)
+                            delegate.add();
+                    }
+                }
             }
         });
 
