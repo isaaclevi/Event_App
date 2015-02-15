@@ -127,6 +127,7 @@ public class Model
         object.put("EventAddress", event.EventAddress);
         object.saveInBackground();
     }
+<<<<<<< HEAD
 
     public void deleteEvent(Event event) {
 <<<<<<< HEAD
@@ -144,4 +145,6 @@ public class Model
             e.printStackTrace();
         }
     }
+=======
+>>>>>>> parent of 8cd30a4... delete event
 }
