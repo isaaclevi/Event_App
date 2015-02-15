@@ -11,20 +11,33 @@ import java.util.Calendar;
 
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener
 {
+    String previousTime;
+
+    public void setPreviousTime(String previousTime) {
+        this.previousTime = previousTime;
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Use the current time as the default values for the picker
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
+        int hour, minute;
+        if(previousTime == null) {
+            // Use the current time as the default values for the picker
+            final Calendar c = Calendar.getInstance();
+            hour = c.get(Calendar.HOUR_OF_DAY);
+            minute = c.get(Calendar.MINUTE);
+        }
+        else {
+            String date[] = previousTime.split(":");
+            hour = Integer.parseInt(date[0]);
+            minute = Integer.parseInt(date[1]);
+        }
 
         // Create a new instance of TimePickerDialog and return it
         return new TimePickerDialog(getActivity(), this, hour, minute,
                 DateFormat.is24HourFormat(getActivity()));
     }
 
-    public void onTimeSet(TimePicker view, int hourOfDay, int minute)
-    {
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         PickerHelper.getInstance().setTime(hourOfDay, minute);
     }
 }

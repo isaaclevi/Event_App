@@ -25,7 +25,7 @@ public class PickerHelper {
     }
 
     public void setTime(int hourOfDay, int minute) {
-        timeView.setText(hourOfDay + ":" + minute);
+        timeView.setText(hourOfDay + ":" + ((minute < 10) ? "0" : "") + minute);
     }
 
     public void setDateView(TextView dateView) {
