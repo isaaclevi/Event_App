@@ -111,6 +111,7 @@ public class AddEventFragment extends Fragment
             public void onClick(View v) {
                 event.setEventName(EventName.getText().toString());
                 event.setEventExplanation(EventExplanation.getText().toString());
+                event.setEventAddress(AddressView.getText().toString());
                 event.setEventTime(DateView.getText().toString() + " " + TimeView.getText().toString());
                 Model.getInstance().saveEvent(event);
                 if(delegate != null)
