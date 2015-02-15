@@ -25,13 +25,12 @@ public class EditEventFragment extends Fragment {
         // Required empty public constructor
     }
 
-    EditText EventName;
-    EditText EventExplanation;
+    TextView EventName;
+    TextView EventExplanation;
     TextView UserName;
     TextView AddressView;
     TextView DateView, TimeView;
-    Button EventAddress;
-    Button AddEvent;
+    Button UpdateEvent;
     Button Date, Time;
 
     User currentUser;
@@ -109,20 +108,19 @@ public class EditEventFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_add_event, container, false);
 
-        UserName = (TextView) root.findViewById(R.id.add_user_name);
-        EventName = (EditText) root.findViewById(R.id.add_event_name);
-        EventExplanation = (EditText) root.findViewById(R.id.add_event_explanation);
-        EventAddress = (Button) root.findViewById(R.id.add_event_address);
+        UserName = (TextView) root.findViewById(R.id.edit_user_name);
+        EventName = (TextView) root.findViewById(R.id.edit_event_name);
+        EventExplanation = (EditText) root.findViewById(R.id.edit_event_explanation);
         AddressView = (TextView) root.findViewById(R.id.add_event_address_view);
         DateView = (TextView) root.findViewById(R.id.add_event_date_view);
         TimeView = (TextView) root.findViewById(R.id.add_event_time_view);
-        AddEvent = (Button) root.findViewById(R.id.add_event_button);
+        UpdateEvent = (Button) root.findViewById(R.id.update_event_button);
 
         UserName.setText(currentUser.PersonName + "(" + currentUser.NickName + ")");
         event.setUserName(currentUser.NickName);
 
-        Date = (Button) root.findViewById(R.id.add_event_date);
-        Time = (Button) root.findViewById(R.id.add_event_time);
+        Date = (Button) root.findViewById(R.id.edit_event_date);
+        Time = (Button) root.findViewById(R.id.edit_event_time);
 
         Date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,19 +138,11 @@ public class EditEventFragment extends Fragment {
             }
         });
 
-        EventAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (delegate != null) {
-                    delegate.selectAddress(event);
-                }
-            }
-        });
 
         if (event.EventAddress != null)
             AddressView.setText(event.EventAddress);
 
-        AddEvent.setOnClickListener(new View.OnClickListener() {
+        UpdateEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setEmptyError(EventName);

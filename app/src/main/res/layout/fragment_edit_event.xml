@@ -10,28 +10,28 @@
         android:layout_gravity="center_horizontal|center_vertical">
 
         <TextView
-            android:id="@+id/event_name"
+            android:id="@+id/edit_event_name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:hint="Event Name"/>
 
         <TextView
-            android:id="@+id/user_name"
+            android:id="@+id/edit_user_name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:hint="User Name"/>
 
-        <TextView
-            android:id="@+id/event_explanation"
+        <EditText
+            android:id="@+id/edit_event_explanation"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:hint="Event Explanation"/>
 
         <TextView
-            android:id="@+id/add_event_address_view"
+            android:id="@+id/edit_event_address_view"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
