@@ -42,7 +42,7 @@ public class EditEventFragment extends Fragment {
         currentUser = user;
     }
 
-    public void setDelegate(EditEventDelegate delegate) {
+    public void SetDelegate(EditEventDelegate delegate) {
         this.delegate = delegate;
     }
 
@@ -74,6 +74,7 @@ public class EditEventFragment extends Fragment {
         return Num;
     }
 
+    //validating time and day by current date and time
     private boolean Validation() {
         int Day, Month, Year, Hours, Minuets;
         int[] Array;
@@ -138,7 +139,6 @@ public class EditEventFragment extends Fragment {
             }
         });
 
-
         if (event.EventAddress != null)
             AddressView.setText(event.EventAddress);
 
@@ -162,7 +162,6 @@ public class EditEventFragment extends Fragment {
         return root;
     }
 }
-    //---------------------------------------------------------------------------------------
 
 
 

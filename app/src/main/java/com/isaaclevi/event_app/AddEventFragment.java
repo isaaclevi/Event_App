@@ -42,6 +42,8 @@ public class AddEventFragment extends Fragment
         currentUser = user;
     }
 
+    public void SetEventAdders(String EventAdders){AddressView = EventAddress;}
+
     public void setDelegate(AddEventDelegate delegate) {
         this.delegate = delegate;
     }
@@ -60,24 +62,29 @@ public class AddEventFragment extends Fragment
         fragment.setPreviousDate(DateView.getText().toString());
     }
 
-    private void setEmptyError(TextView text)
+    private boolean setEmptyError(TextView text)
     {
         if(text.getText().toString().isEmpty())
         {
             text.setError("This Field Cannot Be Empty!");
+            return false;
         }
+        return true;
     }
 
     private int[] ParsStringDateOrTime(String DateOrTime)
     {
         int[] Num=new int[5];
         String[] Str;
-        Str=DateOrTime.split("[/ :]");
-        for(int i=0;i<5;i++)
+        if(DateOrTime.split("[/ :]").length==5)
         {
-            Num[i]=Integer.parseInt(Str[i]);
+            Str = DateOrTime.split("[/ :]");
+            for (int i = 0; i < 5; i++) {
+                Num[i] = Integer.parseInt(Str[i]);
+            }
+            return Num;
         }
-        return Num;
+        return null;
     }
 
     private boolean Validation()
@@ -85,6 +92,19 @@ public class AddEventFragment extends Fragment
         int Day, Month, Year, Hours, Minuets;
         int[] Array;
         Array = ParsStringDateOrTime(DateView.getText().toString() + " " + TimeView.getText().toString());
+
+        if(Array == null)
+        {
+            if(DateView.getText().toString().isEmpty()) {
+                DateView.setError("Date Field Cannot Be Empty!");
+            }
+            if(TimeView.getText().toString().isEmpty()) {
+                TimeView.setError("Time Field Cannot Be Empty!");
+            }
+
+            return false;
+        }
+
         Day = Array[0];
         Month = Array[1];
         Year = Array[2];
@@ -96,6 +116,7 @@ public class AddEventFragment extends Fragment
         int day = c.get(Calendar.DAY_OF_MONTH);
         int hours = c.get(Calendar.HOUR_OF_DAY);
         int minuets = c.get(Calendar.MINUTE);
+
 
         if (Year < year || (Year == year && Month < month) || (Year == year && Month == month && Day < day))
         {
@@ -149,25 +170,13 @@ public class AddEventFragment extends Fragment
             }
         });
 
-        EventAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(delegate != null) {
-                    delegate.selectAddress(event);
-                }
-            }
-        });
-
-        if(event.EventAddress != null)
-            AddressView.setText(event.EventAddress);
-
         AddEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                setEmptyError(EventName);
-                setEmptyError(AddressView);
-                if(Validation() && EventName.getText().toString().isEmpty() /*&& AddressView.getText().toString().isEmpty()*/)
+                boolean flagEventName=setEmptyError(EventName);
+                //setEmptyError(AddressView);
+                if(Validation() && flagEventName /*&& AddressView.getText().toString().isEmpty()*/)
                 {
                     event.setEventName(EventName.getText().toString());
                     event.setEventExplanation(EventExplanation.getText().toString());

@@ -100,7 +100,9 @@ public class MainScreen extends Activity {
             @Override
             public void loginClick() {
                 final ListOfEventsFragment eventsFragment = new ListOfEventsFragment();
-                eventsFragment.SetListOfEventsDelegate(new ListOfEventsFragment.ListOfEventsDelegate() {
+                eventsFragment.setUser(currentUser);
+                eventsFragment.SetListOfEventsDelegate(new ListOfEventsFragment.ListOfEventsDelegate()
+                {
                     @Override
                     public void viewEventLocation(Event event) {
                         EventDetailsFragment detailsFragment = new EventDetailsFragment();
@@ -112,6 +114,20 @@ public class MainScreen extends Activity {
                         transaction.commit();
                         AddEventButton.setVisible(false);
                     }
+
+                    @Override
+                    public void OpenEditFragment(Event event)
+                    {
+                        final EditEventFragment editEventFrag = new EditEventFragment();
+                        editEventFrag.SetCurrentUser(currentUser);
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.remove(eventsFragment);
+                        transaction.add(R.id.fragment_container, editEventFrag, "EditEventFrag");
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                        AddEventButton.setVisible(false);
+                    }
+
                 });
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.remove(logInFragment);
@@ -179,26 +195,27 @@ public class MainScreen extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() == 1) {
+        if (getFragmentManager().getBackStackEntryCount() == 1)
+        {
             this.finish();
         }
         else {
-            if(getFragmentManager().findFragmentByTag("ListOfEventsFragment") != null) {
-                if (getFragmentManager().findFragmentByTag("ListOfEventsFragment").isVisible()) {
-                    AddEventButton.setVisible(false);
-                }
+            if(getFragmentManager().findFragmentByTag("ListOfEventsFragment") != null
+                    && getFragmentManager().findFragmentByTag("ListOfEventsFragment").isVisible())
+            {
+                AddEventButton.setVisible(false);
             }
             else {
-                if(getFragmentManager().findFragmentByTag("EventDetailsFragment") != null) {
-                    if(getFragmentManager().findFragmentByTag("EventDetailsFragment").isVisible()) {
-                        SaveLocationButton.setVisible(false);
-                    }
+                if(getFragmentManager().findFragmentByTag("EventDetailsFragment") != null
+                        && getFragmentManager().findFragmentByTag("EventDetailsFragment").isVisible())
+                {
+                        SaveLocationButton.setVisible(true);
                 }
                 else {
-                    if(getFragmentManager().findFragmentByTag("AddEventFragment") != null) {
-                        if (getFragmentManager().findFragmentByTag("AddEventFragment").isVisible()) {
-                            AddEventButton.setVisible(true);
-                        }
+                    if(getFragmentManager().findFragmentByTag("AddEventFragment") != null
+                        && getFragmentManager().findFragmentByTag("AddEventFragment").isVisible())
+                    {
+                        AddEventButton.setVisible(true);
                     }
                 }
             }

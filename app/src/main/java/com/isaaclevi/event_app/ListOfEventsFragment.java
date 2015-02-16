@@ -3,6 +3,7 @@ package com.isaaclevi.event_app;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ public class ListOfEventsFragment extends Fragment
 
     interface ListOfEventsDelegate {
         void viewEventLocation(Event event);
+        void OpenEditFragment(Event event);
     }
 
     private ListOfEventsDelegate listOfEventsDelegate;
@@ -90,7 +92,7 @@ public class ListOfEventsFragment extends Fragment
 
             TextView EventName = (TextView) convertView.findViewById(R.id.event_name);
             EventName.setText(event.EventName);
-
+            //user name = person name + (nickname)
             TextView UserName = (TextView) convertView.findViewById(R.id.user_name);
             UserName.setText(event.UserName);
 
@@ -106,7 +108,7 @@ public class ListOfEventsFragment extends Fragment
             deleteButton.setVisibility(View.INVISIBLE);
             Button editButton = (Button) convertView.findViewById(R.id.edit_event);
             editButton.setVisibility(View.INVISIBLE);
-            if (user.NickName.equals(user))
+            if (user.NickName.equals(event.UserName))
             {
                 deleteButton.setVisibility(View.VISIBLE);
                 editButton.setVisibility(View.VISIBLE);
@@ -147,8 +149,9 @@ public class ListOfEventsFragment extends Fragment
                             .setPositiveButton("Yes",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-                                            Model.getInstance().deleteEvent(event);
-                                            adapter.updateList();
+                                            //FragmentTransaction transaction=getFragmentManager().beginTransaction();
+                                            //transaction.remove("");
+                                            listOfEventsDelegate.OpenEditFragment(event);
                                         }
                                     })
                             .setNegativeButton("No",
