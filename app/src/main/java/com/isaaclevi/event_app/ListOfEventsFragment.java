@@ -106,8 +106,7 @@ public class ListOfEventsFragment extends Fragment
             deleteButton.setVisibility(View.INVISIBLE);
             Button editButton = (Button) convertView.findViewById(R.id.edit_event);
             editButton.setVisibility(View.INVISIBLE);
-            if (user.NickName.equals(user))
-            {
+            //if (user.equals(user.NickName)) {
                 deleteButton.setVisibility(View.VISIBLE);
                 editButton.setVisibility(View.VISIBLE);
             }

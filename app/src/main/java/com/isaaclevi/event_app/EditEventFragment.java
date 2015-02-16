@@ -32,7 +32,6 @@ public class EditEventFragment extends Fragment {
     TextView DateView, TimeView;
     Button UpdateEvent;
     Button Date, Time;
-
     User currentUser;
     Event event;
 
