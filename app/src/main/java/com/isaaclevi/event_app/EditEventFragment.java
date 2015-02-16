@@ -58,27 +58,50 @@ public class EditEventFragment extends Fragment {
         fragment.setPreviousDate(DateView.getText().toString());
     }
 
-    private void setEmptyError(TextView text) {
-        if (text.getText().toString().isEmpty()) {
+    private boolean setEmptyError(TextView text)
+    {
+        if(text.getText().toString().isEmpty())
+        {
             text.setError("This Field Cannot Be Empty!");
+            return false;
         }
+        return true;
     }
 
-    private int[] ParsStringDateOrTime(String DateOrTime) {
-        int[] Num = new int[5];
+    private int[] ParsStringDateOrTime(String DateOrTime)
+    {
+        int[] Num=new int[5];
         String[] Str;
-        Str = DateOrTime.split("[/ :]");
-        for (int i = 0; i < 5; i++) {
-            Num[i] = Integer.parseInt(Str[i]);
+        if(DateOrTime.split("[/ :]").length==5)
+        {
+            Str = DateOrTime.split("[/ :]");
+            for (int i = 0; i < 5; i++) {
+                Num[i] = Integer.parseInt(Str[i]);
+            }
+            return Num;
         }
-        return Num;
+        return null;
     }
 
     //validating time and day by current date and time
-    private boolean Validation() {
+    private boolean Validation()
+    {
         int Day, Month, Year, Hours, Minuets;
         int[] Array;
         Array = ParsStringDateOrTime(DateView.getText().toString() + " " + TimeView.getText().toString());
+
+        if(Array == null)
+        {
+            if(DateView.getText().toString().isEmpty()) {
+                DateView.setError("Date Field Cannot Be Empty!");
+            }
+            if(TimeView.getText().toString().isEmpty()) {
+                TimeView.setError("Time Field Cannot Be Empty!");
+            }
+
+            return false;
+        }
+
         Day = Array[0];
         Month = Array[1];
         Year = Array[2];
@@ -91,12 +114,15 @@ public class EditEventFragment extends Fragment {
         int hours = c.get(Calendar.HOUR_OF_DAY);
         int minuets = c.get(Calendar.MINUTE);
 
-        if (Year < year || (Year == year && Month < month) || (Year == year && Month == month && Day < day)) {
+
+        if (Year < year || (Year == year && Month < month) || (Year == year && Month == month && Day < day))
+        {
             DateView.setError("Date Chosen is smaller then current date");
             return false;
         }
 
-        if ((Year == year && Month == month && Day == day) && (Hours < hours || (Hours == hours && Minuets < minuets))) {
+        if ((Year == year && Month == month && Day == day) && (Hours < hours || (Hours == hours && Minuets < minuets)))
+        {
             TimeView.setError("Time Chosen is smaller then current time");
             return false;
         }
@@ -145,9 +171,9 @@ public class EditEventFragment extends Fragment {
         UpdateEvent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setEmptyError(EventName);
+                boolean flagEventName = setEmptyError(EventName);
                 setEmptyError(AddressView);
-                if (Validation() && EventName.getText().toString().isEmpty() /*&& AddressView.getText().toString().isEmpty()*/) {
+                if(Validation() && flagEventName /*&& AddressView.getText().toString().isEmpty()*/) {
                     event.setEventName(EventName.getText().toString());
                     event.setEventExplanation(EventExplanation.getText().toString());
                     event.setEventAddress(AddressView.getText().toString());

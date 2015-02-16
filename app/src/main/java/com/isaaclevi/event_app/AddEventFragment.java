@@ -175,7 +175,7 @@ public class AddEventFragment extends Fragment
             public void onClick(View v)
             {
                 boolean flagEventName=setEmptyError(EventName);
-                //setEmptyError(AddressView);
+                setEmptyError(AddressView);
                 if(Validation() && flagEventName /*&& AddressView.getText().toString().isEmpty()*/)
                 {
                     event.setEventName(EventName.getText().toString());
