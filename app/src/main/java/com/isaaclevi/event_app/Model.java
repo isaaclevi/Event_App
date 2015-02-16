@@ -40,7 +40,7 @@ public class Model
         try {
             List<ParseObject> parseObjects = query.find();
             for(ParseObject object: parseObjects){
-                Event event = new Event(object.getString("objectId"),
+                Event event = new Event(object.getObjectId(),
                         object.getString("EventName"),
                         object.getString("UserName"),
                         object.getString("EventExplanation"),
